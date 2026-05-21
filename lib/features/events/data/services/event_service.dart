@@ -12,7 +12,7 @@ class EventsService {
   Future<List<EventModel>> getEvents() async {
     // final response = await dio.get('/events');
     final String response = await rootBundle.loadString(
-      'assets/mocks/events.json',
+      'assets/mocks/events_mocks.json',
     );
 
     final List<dynamic> data = jsonDecode(response);

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vynce_frontend/core/injector.dart';
 import 'package:vynce_frontend/core/theme/app_theme.dart';
 import 'package:vynce_frontend/navigation/app_shell.dart';
 
 void main() {
+  setupInjector();
+
   runApp(const MyApp());
 }
 

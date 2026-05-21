@@ -8,7 +8,7 @@ class AppTheme {
     useMaterial3: true,
 
     textTheme:
-        GoogleFonts.abelTextTheme(),
+        GoogleFonts.aBeeZeeTextTheme(),
 
     scaffoldBackgroundColor:
         AppColors.light,
