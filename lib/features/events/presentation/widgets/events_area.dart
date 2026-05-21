@@ -11,13 +11,16 @@ class EventsArea extends StatefulWidget {
 }
 class _EventsAreaState extends State<EventsArea> {
   final EventsService _eventsService = getIt<EventsService>();
-
   List<EventModel> events = [];
 
   @override
   void initState() {
     super.initState();
     loadEvents();
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> loadEvents() async {
