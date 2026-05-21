@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "title": "Sunset Festival",
+    "description": "Festival open air com DJs e música eletrônica.",
+    "image_url": "https://picsum.photos/500/300?1",
+    "location": "Porto Alegre",
+    "date": "2026-06-12T22:00:00.000Z",
+    "participants_count": 320
+  },
+  {
+    "id": "2",
+    "title": "Noite Universitária",
+    "description": "Festa universitária com atrações ao vivo.",
+    "image_url": "https://picsum.photos/500/300?2",
+    "location": "Canoas",
+    "date": "2026-06-15T23:00:00.000Z",
+    "participants_count": 540
+  },
+  {
+    "id": "3",
+    "title": "Tech Meetup RS",
+    "description": "Networking para devs, startups e designers.",
+    "image_url": "https://picsum.photos/500/300?3",
+    "location": "São Leopoldo",
+    "date": "2026-06-18T19:30:00.000Z",
+    "participants_count": 120
+  },
+  {
+    "id": "4",
+    "title": "Festival de Inverno",
+    "description": "Shows ao vivo, vinho e gastronomia.",
+    "image_url": "https://picsum.photos/500/300?4",
+    "location": "Gramado",
+    "date": "2026-07-01T20:00:00.000Z",
+    "participants_count": 860
+  },
+  {
+    "id": "5",
+    "title": "Pool Party Neon",
+    "description": "Pool party com tema neon e open bar.",
+    "image_url": "https://picsum.photos/500/300?5",
+    "location": "Florianópolis",
+    "date": "2026-07-08T16:00:00.000Z",
+    "participants_count": 430
+  },
+  {
+    "id": "6",
+    "title": "Pagode do Parque",
+    "description": "Evento de pagode ao ar livre.",
+    "image_url": "https://picsum.photos/500/300?6",
+    "location": "Curitiba",
+    "date": "2026-07-11T18:00:00.000Z",
+    "participants_count": 275
+  },
+  {
+    "id": "7",
+    "title": "Indie Rock Night",
+    "description": "Bandas independentes e cultura alternativa.",
+    "image_url": "https://picsum.photos/500/300?7",
+    "location": "São Paulo",
+    "date": "2026-07-14T21:00:00.000Z",
+    "participants_count": 390
+  },
+  {
+    "id": "8",
+    "title": "Startup Weekend",
+    "description": "Evento para empreendedores e criadores.",
+    "image_url": "https://picsum.photos/500/300?8",
+    "location": "Rio de Janeiro",
+    "date": "2026-07-20T09:00:00.000Z",
+    "participants_count": 210
+  },
+  {
+    "id": "9",
+    "title": "Festival Sertanejo",
+    "description": "Grandes nomes do sertanejo nacional.",
+    "image_url": "https://picsum.photos/500/300?9",
+    "location": "Goiânia",
+    "date": "2026-07-25T20:30:00.000Z",
+    "participants_count": 1500
+  },
+  {
+    "id": "10",
+    "title": "Rave Aurora",
+    "description": "Experiência eletrônica durante toda a madrugada.",
+    "image_url": "https://picsum.photos/500/300?10",
+    "location": "Balneário Camboriú",
+    "date": "2026-08-02T00:00:00.000Z",
+    "participants_count": 980
+  }
+]
