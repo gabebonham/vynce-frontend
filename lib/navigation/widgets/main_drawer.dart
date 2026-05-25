@@ -11,41 +11,45 @@ class _MainDrawerState extends State<MainDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-          child: ListView(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 32.0, left: 8, bottom:8),
+          child: Column(
+            spacing: 8,
             children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-
-                child: Text(
-                  'Menu',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-
+              // Itens do topo
               ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Home'),
+                splashColor: Color.fromARGB(0, 255, 255, 255),
+                hoverColor: Color.fromARGB(0, 255, 255, 255),
+                leading: const Icon(Icons.person),
+                title: const Text('Perfil'),
+                onTap: () {},
+              ),
+              ListTile(
+                splashColor: Color.fromARGB(0, 255, 255, 255),
+                hoverColor: Color.fromARGB(0, 255, 255, 255),
+                leading: const Icon(Icons.settings),
+                title: const Text('Configurações'),
                 onTap: () {},
               ),
 
-              ListTile(
-                leading: Icon(Icons.event),
-                title: Text('Eventos'),
-                onTap: () {},
-              ),
+              // Empurra o logout pro fundo
+              const Spacer(),
 
+              // Botão de logout fixo no fundo
               ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Perfil'),
-                onTap: () {},
+                splashColor: Color.fromARGB(0, 255, 255, 255),
+                hoverColor: Color.fromARGB(0, 255, 255, 255),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('Sair', style: TextStyle(color: Colors.red)),
+                onTap: () {
+                  // lógica de logout
+                },
               ),
             ],
           ),
-        );
+        ),
+      ),
+    );
   }
 }

@@ -21,4 +21,16 @@ class EventsService {
     
     return events;
   }
+  Future<EventModel> getEvent(String id) async {
+    // final response = await dio.get('/events');
+    final String response = await rootBundle.loadString(
+      'assets/mocks/events_mocks.json',
+    );
+
+    final List<dynamic> data = jsonDecode(response);
+
+    final events = EventModel.fromJsonList(data);
+    
+    return events[0];
+  }
 }
