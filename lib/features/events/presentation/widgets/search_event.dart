@@ -10,24 +10,30 @@ class SearchEvent extends StatefulWidget {
 class _SearchEventState extends State<SearchEvent> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: 'Nome do evento',
-        filled: true,
-        prefixIcon: Icon(Icons.search),
-        fillColor: Colors.grey[100],
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1.5),
-        ),
+    return Container(
+      height: 42,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.black12, width: 0.5),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: Row(
+        children: [
+          const Icon(Icons.search, size: 18, color: Colors.black38),
+          const SizedBox(width: 8),
+          const Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Buscar eventos...',
+                hintStyle: TextStyle(fontSize: 14, color: Colors.black38),
+                border: InputBorder.none,
+                isDense: true,
+              ),
+            ),
+          ),
+          const Icon(Icons.tune, size: 18, color: Colors.black54),
+        ],
       ),
     );
   }

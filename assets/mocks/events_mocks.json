@@ -5,6 +5,7 @@
     "description": "Festival open air com DJs e música eletrônica.",
     "image_url": "https://picsum.photos/500/300?1",
     "location": "Porto Alegre",
+    "category": "Musica",
     "date": "2026-06-12T22:00:00.000Z",
     "participants_count": 320
   },
@@ -14,6 +15,7 @@
     "description": "Festa universitária com atrações ao vivo.",
     "image_url": "https://picsum.photos/500/300?2",
     "location": "Canoas",
+    "category": "Musica",
     "date": "2026-06-15T23:00:00.000Z",
     "participants_count": 540
   },
@@ -23,6 +25,7 @@
     "description": "Networking para devs, startups e designers.",
     "image_url": "https://picsum.photos/500/300?3",
     "location": "São Leopoldo",
+    "category": "Musica",
     "date": "2026-06-18T19:30:00.000Z",
     "participants_count": 120
   },
@@ -33,6 +36,7 @@
     "image_url": "https://picsum.photos/500/300?4",
     "location": "Gramado",
     "date": "2026-07-01T20:00:00.000Z",
+    "category": "Musica",
     "participants_count": 860
   },
   {
@@ -40,6 +44,7 @@
     "title": "Pool Party Neon",
     "description": "Pool party com tema neon e open bar.",
     "image_url": "https://picsum.photos/500/300?5",
+    "category": "Musica",
     "location": "Florianópolis",
     "date": "2026-07-08T16:00:00.000Z",
     "participants_count": 430
@@ -50,6 +55,7 @@
     "description": "Evento de pagode ao ar livre.",
     "image_url": "https://picsum.photos/500/300?6",
     "location": "Curitiba",
+    "category": "Musica",
     "date": "2026-07-11T18:00:00.000Z",
     "participants_count": 275
   },
@@ -58,6 +64,7 @@
     "title": "Indie Rock Night",
     "description": "Bandas independentes e cultura alternativa.",
     "image_url": "https://picsum.photos/500/300?7",
+    "category": "Musica",
     "location": "São Paulo",
     "date": "2026-07-14T21:00:00.000Z",
     "participants_count": 390
@@ -68,6 +75,7 @@
     "description": "Evento para empreendedores e criadores.",
     "image_url": "https://picsum.photos/500/300?8",
     "location": "Rio de Janeiro",
+    "category": "Musica",
     "date": "2026-07-20T09:00:00.000Z",
     "participants_count": 210
   },
@@ -77,6 +85,7 @@
     "description": "Grandes nomes do sertanejo nacional.",
     "image_url": "https://picsum.photos/500/300?9",
     "location": "Goiânia",
+    "category": "Musica",
     "date": "2026-07-25T20:30:00.000Z",
     "participants_count": 1500
   },
@@ -86,6 +95,7 @@
     "description": "Experiência eletrônica durante toda a madrugada.",
     "image_url": "https://picsum.photos/500/300?10",
     "location": "Balneário Camboriú",
+    "category": "Musica",
     "date": "2026-08-02T00:00:00.000Z",
     "participants_count": 980
   }

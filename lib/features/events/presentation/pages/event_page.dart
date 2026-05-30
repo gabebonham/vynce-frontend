@@ -21,6 +21,7 @@ class _EventPageState extends State<EventPage> {
     super.initState();
     loadEvent();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -33,17 +34,17 @@ class _EventPageState extends State<EventPage> {
       event = result;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-  final date = event?.date.toLocal();
-  final formatted = date != null
-      ? DateFormat('dd/MM/yyyy • HH:mm').format(date)
-      : '';
+    final date = event?.date.toLocal();
+    final formatted = date != null
+        ? DateFormat('dd/MM/yyyy • HH:mm').format(date)
+        : '';
     return Scaffold(
       body: Column(
         children: [
           ClipRRect(
-
             child: Stack(
               children: [
                 SizedBox(
@@ -73,6 +74,20 @@ class _EventPageState extends State<EventPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all(
+                              Colors.black.withOpacity(0.3),
+                            ),
+                            shape: WidgetStateProperty.all(CircleBorder()),
+                          ),
+                        ),
+
                         Text(
                           formatted,
                           style: TextStyle(

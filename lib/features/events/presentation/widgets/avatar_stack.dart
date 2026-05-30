@@ -20,32 +20,46 @@ class AvatarStack extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          width: avatarSize + (visibleCount - 1) * (avatarSize - overlap),
-          height: avatarSize,
-          child: Stack(
-            children: List.generate(visibleCount, (i) {
-              final color = Theme.of(context).colorScheme.primaryContainer;
-              return Positioned(
-                left: i * (avatarSize - overlap),
-                child: _Avatar(
-                  size: avatarSize,
-                  bgColor: color,
-                  fgColor: color,
-                  zIndex: visibleCount - i,
-                ),
-              );
-            }),
+        if (visibleCount > 0)
+          SizedBox(
+            // ✅ garante width nunca negativo
+            width:
+                avatarSize +
+                (visibleCount - 1) *
+                    (avatarSize - overlap).clamp(0, double.infinity),
+            height: avatarSize,
+            child: Stack(
+              children: List.generate(visibleCount, (i) {
+                final colors = [
+                  const Color(0xFF7F77DD),
+                  const Color(0xFFD4537E),
+                  const Color(0xFF1D9E75),
+                  const Color(0xFFD85A30),
+                ];
+                return Positioned(
+                  left: i * (avatarSize - overlap),
+                  child: _Avatar(
+                    size: avatarSize,
+                    bgColor: colors[i % colors.length],
+                    fgColor: colors[i % colors.length],
+                    zIndex: visibleCount - i,
+                  ),
+                );
+              }),
+            ),
           ),
-        ),
         if (extra > 0) ...[
-          const SizedBox(width: 8),
-          Text(
-            '+$extra participantes',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[600],
-                ),
+          const SizedBox(width: 6),
+          Flexible(
+            // ✅ texto encolhe se necessário
+            child: Text(
+              '+$extra', // ✅ texto mais curto, sem "participantes"
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontWeight: FontWeight.w500,
+                color: Colors.white.withOpacity(0.5),
+              ),
+            ),
           ),
         ],
       ],

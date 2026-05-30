@@ -20,11 +20,13 @@ class AppTheme {
 
       surface: AppColors.light,
 
-      onPrimary: Colors.white,
+      onPrimary: AppColors.darkBlue,
 
-      onSecondary: Colors.white,
+      onSecondary: Colors.green,
 
-      onSurface: AppColors.darkGray,
+      onSurface: AppColors.dark,
+
+      error: AppColors.red
     ),
   );
 }

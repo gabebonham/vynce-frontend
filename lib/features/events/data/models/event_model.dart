@@ -9,6 +9,8 @@ class EventModel {
 
   final String location;
 
+  final String category;
+
   final DateTime date;
 
   final int participantsCount;
@@ -19,6 +21,7 @@ class EventModel {
     required this.description,
     required this.imageUrl,
     required this.location,
+    required this.category,
     required this.date,
     required this.participantsCount,
   });
@@ -46,6 +49,7 @@ class EventModel {
       imageUrl: json['image_url'],
 
       location: json['location'],
+      category: json['category'],
 
       date: DateTime.parse(
         json['date'],
@@ -67,6 +71,7 @@ class EventModel {
       'image_url': imageUrl,
 
       'location': location,
+      'category': category,
 
       'date': date.toIso8601String(),
 
