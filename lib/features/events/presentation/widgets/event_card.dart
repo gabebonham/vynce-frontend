@@ -61,11 +61,7 @@ class _EventCardState extends State<EventCard> {
                       ),
                     ),
                     Positioned.fill(
-                      child: Container(
-                        color: Colors.black.withOpacity(
-                          0.5,
-                        ),
-                      ),
+                      child: Container(color: Colors.black.withOpacity(0.5)),
                     ),
                     Positioned.fill(
                       top: 0,
@@ -90,13 +86,31 @@ class _EventCardState extends State<EventCard> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Badge(
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface.withOpacity(0.30),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.surface.withOpacity(0.3),
+                                      width: 1,
+                                    ),
+                                  ),
                                   child: Text(
                                     event.category,
                                     style: TextStyle(
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.surface,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),

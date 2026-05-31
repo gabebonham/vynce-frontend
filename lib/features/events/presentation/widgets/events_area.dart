@@ -5,6 +5,7 @@ import 'package:vynce_frontend/features/events/data/models/event_model.dart';
 import 'package:vynce_frontend/features/events/data/services/event_service.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/event_card.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/featured_section.dart';
+import 'package:vynce_frontend/features/events/presentation/widgets/next_to_you_area.dart';
 
 class EventsArea extends StatefulWidget {
   @override
@@ -12,33 +13,15 @@ class EventsArea extends StatefulWidget {
 }
 
 class _EventsAreaState extends State<EventsArea> {
-  final EventsService _eventsService = getIt<EventsService>();
-  List<EventModel> events = [];
 
-  @override
-  void initState() {
-    super.initState();
-    loadEvents();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  Future<void> loadEvents() async {
-    final result = await _eventsService.getEvents();
-
-    setState(() {
-      events = result;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: FeaturedSection(events:events),
+    return ListView(
+      children: [
+        FeaturedSection(),
+        NextToYouArea()
+      ],
     );
   }
 }

@@ -121,7 +121,13 @@ class _EventsPageState extends State<EventsPage> {
               },
             ),
           ),
-          Padding(padding: EdgeInsetsGeometry.all(12), child: EventsArea()),
+          Expanded(
+            // <-- adiciona isso
+            child: Padding(
+              padding: EdgeInsetsGeometry.all(12),
+              child: EventsArea(),
+            ),
+          ),
         ],
       ),
     );
