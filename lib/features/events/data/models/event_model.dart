@@ -11,6 +11,8 @@ class EventModel {
 
   final String category;
 
+  final String borderColor;
+
   final DateTime date;
 
   final int participantsCount;
@@ -22,6 +24,7 @@ class EventModel {
     required this.imageUrl,
     required this.location,
     required this.category,
+    required this.borderColor,
     required this.date,
     required this.participantsCount,
   });
@@ -46,17 +49,18 @@ class EventModel {
       description:
           json['description'],
 
-      imageUrl: json['image_url'],
+      imageUrl: json['imageUrl'],
 
       location: json['location'],
       category: json['category'],
+      borderColor: json['borderColor'],
 
       date: DateTime.parse(
         json['date'],
       ),
 
       participantsCount:
-          json['participants_count'],
+          json['participantsCount'],
     );
   }
 
@@ -68,14 +72,14 @@ class EventModel {
 
       'description': description,
 
-      'image_url': imageUrl,
+      'imageUrl': imageUrl,
 
       'location': location,
       'category': category,
-
+      'borderColor': borderColor,
       'date': date.toIso8601String(),
 
-      'participants_count':
+      'participantsCount':
           participantsCount,
     };
   }

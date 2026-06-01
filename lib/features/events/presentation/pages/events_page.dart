@@ -124,7 +124,7 @@ class _EventsPageState extends State<EventsPage> {
           Expanded(
             // <-- adiciona isso
             child: Padding(
-              padding: EdgeInsetsGeometry.all(12),
+              padding: EdgeInsetsGeometry.all(18),
               child: EventsArea(),
             ),
           ),

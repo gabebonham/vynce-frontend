@@ -56,7 +56,7 @@ class _EventCardState extends State<EventCard> {
                       width: 220,
                       height: 300,
                       child: Image.network(
-                        'https://picsum.photos/300',
+                        widget.event.imageUrl,
                         fit: BoxFit.cover,
                       ),
                     ),

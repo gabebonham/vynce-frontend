@@ -29,13 +29,8 @@ class _AppShellState extends State<AppShell> {
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(hoverColor: Colors.transparent),
 
-        child: MainNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
+        child: MainNavingationBar(
+          child: pages[currentIndex],
         ),
       ),
     );

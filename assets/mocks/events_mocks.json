@@ -3,100 +3,110 @@
     "id": "1",
     "title": "Sunset Festival",
     "description": "Festival open air com DJs e música eletrônica.",
-    "image_url": "https://picsum.photos/500/300?1",
+    "imageUrl": "https://picsum.photos/500/300?1",
     "location": "Porto Alegre",
-    "category": "Musica",
+    "category": "Música",
+    "borderColor": "0xFFCE1F7F",
     "date": "2026-06-12T22:00:00.000Z",
-    "participants_count": 320
+    "participantsCount": 320
   },
   {
     "id": "2",
     "title": "Noite Universitária",
     "description": "Festa universitária com atrações ao vivo.",
-    "image_url": "https://picsum.photos/500/300?2",
+    "imageUrl": "https://picsum.photos/500/300?2",
     "location": "Canoas",
-    "category": "Musica",
+    "borderColor": "0xFF7F77DD",
+    "category": "Festa",
     "date": "2026-06-15T23:00:00.000Z",
-    "participants_count": 540
+    "participantsCount": 540
   },
   {
     "id": "3",
     "title": "Tech Meetup RS",
     "description": "Networking para devs, startups e designers.",
-    "image_url": "https://picsum.photos/500/300?3",
+    "imageUrl": "https://picsum.photos/500/300?3",
+    "borderColor": "0xFF102b51",
     "location": "São Leopoldo",
-    "category": "Musica",
+    "category": "Tech",
     "date": "2026-06-18T19:30:00.000Z",
-    "participants_count": 120
+    "participantsCount": 120
   },
   {
     "id": "4",
     "title": "Festival de Inverno",
     "description": "Shows ao vivo, vinho e gastronomia.",
-    "image_url": "https://picsum.photos/500/300?4",
+    "imageUrl": "https://picsum.photos/500/300?4",
+    "borderColor": "0xFF750620",
     "location": "Gramado",
+    "category": "Gastronomia",
     "date": "2026-07-01T20:00:00.000Z",
-    "category": "Musica",
-    "participants_count": 860
+    "participantsCount": 860
   },
   {
     "id": "5",
     "title": "Pool Party Neon",
     "description": "Pool party com tema neon e open bar.",
-    "image_url": "https://picsum.photos/500/300?5",
-    "category": "Musica",
+    "imageUrl": "https://picsum.photos/500/300?5",
+    "borderColor": "0xFF1D9E75",
+    "category": "Festa",
     "location": "Florianópolis",
     "date": "2026-07-08T16:00:00.000Z",
-    "participants_count": 430
+    "participantsCount": 430
   },
   {
     "id": "6",
     "title": "Pagode do Parque",
+    "borderColor": "0xFFD85A30",
     "description": "Evento de pagode ao ar livre.",
-    "image_url": "https://picsum.photos/500/300?6",
+    "imageUrl": "https://picsum.photos/500/300?6",
     "location": "Curitiba",
-    "category": "Musica",
+    "category": "Música",
     "date": "2026-07-11T18:00:00.000Z",
-    "participants_count": 275
+    "participantsCount": 275
   },
   {
     "id": "7",
     "title": "Indie Rock Night",
     "description": "Bandas independentes e cultura alternativa.",
-    "image_url": "https://picsum.photos/500/300?7",
-    "category": "Musica",
+    "imageUrl": "https://picsum.photos/500/300?7",
+    "borderColor": "0xFF534AB7",
+    "category": "Música",
     "location": "São Paulo",
     "date": "2026-07-14T21:00:00.000Z",
-    "participants_count": 390
+    "participantsCount": 390
   },
   {
     "id": "8",
     "title": "Startup Weekend",
     "description": "Evento para empreendedores e criadores.",
-    "image_url": "https://picsum.photos/500/300?8",
+    "borderColor": "0xFF0F6E56",
+    "imageUrl": "https://picsum.photos/500/300?8",
     "location": "Rio de Janeiro",
-    "category": "Musica",
+    "category": "Tech",
     "date": "2026-07-20T09:00:00.000Z",
-    "participants_count": 210
+    "participantsCount": 210
   },
   {
     "id": "9",
     "title": "Festival Sertanejo",
     "description": "Grandes nomes do sertanejo nacional.",
-    "image_url": "https://picsum.photos/500/300?9",
+    "borderColor": "0xFFBA7517",
+    "imageUrl": "https://picsum.photos/500/300?9",
     "location": "Goiânia",
-    "category": "Musica",
+    "category": "Música",
     "date": "2026-07-25T20:30:00.000Z",
-    "participants_count": 1500
+    "participantsCount": 1500
   },
   {
     "id": "10",
     "title": "Rave Aurora",
     "description": "Experiência eletrônica durante toda a madrugada.",
-    "image_url": "https://picsum.photos/500/300?10",
+    "imageUrl": "https://picsum.photos/500/300?10",
+    "borderColor": "0xFF233005",
     "location": "Balneário Camboriú",
-    "category": "Musica",
+    "category": "Música",
     "date": "2026-08-02T00:00:00.000Z",
-    "participants_count": 980
+    "participantsCount": 980
   }
 ]

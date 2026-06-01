@@ -20,6 +20,7 @@ class _EventsAreaState extends State<EventsArea> {
     return ListView(
       children: [
         FeaturedSection(),
+        SizedBox(height: 16),
         NextToYouArea()
       ],
     );

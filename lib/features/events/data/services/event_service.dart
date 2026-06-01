@@ -18,9 +18,10 @@ class EventsService {
     final List<dynamic> data = jsonDecode(response);
 
     final events = EventModel.fromJsonList(data);
-    
+
     return events;
   }
+
   Future<EventModel> getEvent(String id) async {
     // final response = await dio.get('/events');
     final String response = await rootBundle.loadString(
@@ -30,7 +31,11 @@ class EventsService {
     final List<dynamic> data = jsonDecode(response);
 
     final events = EventModel.fromJsonList(data);
-    
+
     return events[0];
+  }
+
+  Future<bool> favoriteEvent(String profileId, String id) async {
+    return Future(() => true);
   }
 }
