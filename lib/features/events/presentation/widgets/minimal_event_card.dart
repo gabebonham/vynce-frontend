@@ -47,15 +47,18 @@ class _MinimalEventCardState extends State<MinimalEventCard> {
               spacing: 16,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 2,
-                        color: Color(int.parse(widget.event.borderColor)),
-                      ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      width: 2,
+                      color: Color(int.parse(widget.event.borderColor)),
                     ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                      16,
+                    ), // 20 - border width (2)
                     child: SizedBox(
                       width: 100,
                       height: 100,
