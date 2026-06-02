@@ -3,6 +3,8 @@ class ProfileModel {
 
   final String name;
 
+  final int pendingMatches;
+
   final String email;
 
   final String avatarUrl;
@@ -21,6 +23,7 @@ class ProfileModel {
     required this.location,
     required this.createdAt,
     required this.favoriteEvents,
+    required this.pendingMatches,
   });
   static List<ProfileModel> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => ProfileModel.fromJson(json)).toList();
@@ -34,6 +37,7 @@ class ProfileModel {
       avatarUrl: json['avatarUrl'],
       location: json['location'],
       favoriteEvents: List<String>.from(json['favoriteEvents']),
+      pendingMatches: json['pendingMatches'],
       createdAt: DateTime.parse(json['createdAt']),
     );
   }
@@ -45,10 +49,12 @@ class ProfileModel {
       'name': name,
 
       'email': email,
-      
+
       'location': location,
 
       'avatarUrl': avatarUrl,
+
+      'pendingMatches': pendingMatches,
 
       'createdAt': createdAt.toIso8601String(),
 

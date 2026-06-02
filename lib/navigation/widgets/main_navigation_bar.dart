@@ -12,12 +12,7 @@ class MainNavingationBar extends StatefulWidget {
 class _MainNavingationBarState extends State<MainNavingationBar> {
   int _currentIndex = 0;
 
-  final _tabs = [
-    '/events',
-    '/map',
-    '/chat',
-    '/profile',
-  ];
+  final _tabs = ['/events', '/map', '/chat', '/profile'];
 
   void _onTap(int index) {
     setState(() => _currentIndex = index);

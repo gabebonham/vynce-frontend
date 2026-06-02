@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/services/event_service.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/event_card.dart';
+import 'package:vynce_frontend/features/events/presentation/widgets/favorites_section.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/featured_section.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/next_to_you_area.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/upcoming_events_area.dart';
@@ -14,16 +11,16 @@ class EventsArea extends StatefulWidget {
 }
 
 class _EventsAreaState extends State<EventsArea> {
-
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         FeaturedSection(),
-        SizedBox(height: 16),
+        SizedBox(height: 26),
         NextToYouArea(),
-        SizedBox(height: 16),
+        SizedBox(height: 26),
+        FavoritesSection(),
+        SizedBox(height: 26),
         UpcomingEventsArea(),
       ],
     );

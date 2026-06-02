@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
 import 'package:intl/intl.dart';

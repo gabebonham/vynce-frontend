@@ -57,7 +57,7 @@ class AvatarStack extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w500,
-                color: Colors.white.withOpacity(0.5),
+                color: Colors.white.withOpacity(0.70),
               ),
             ),
           ),

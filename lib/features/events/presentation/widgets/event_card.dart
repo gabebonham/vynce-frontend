@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
+import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/avatar_stack.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 
 class EventCard extends StatefulWidget {
-  const EventCard({super.key, required this.event});
+  const EventCard({super.key, required this.event, required this.profile});
 
   final EventModel event;
+  final ProfileModel? profile;
 
   @override
   State<EventCard> createState() => _EventCardState(event);
@@ -17,13 +19,17 @@ class _EventCardState extends State<EventCard> {
   bool isFavorite = false;
   final EventModel event;
   _EventCardState(this.event);
+  bool isEventFavorited() {
+    final profile = widget.profile;
+    return profile?.favoriteEvents.any((e) => e == widget.event.id) ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
     final formatted = DateFormat(
       'dd/MM/yyyy • HH:mm',
     ).format(event.date.toLocal());
-
+    bool isFav = isEventFavorited();
     return SizedBox(
       width: 220,
       height: 308,
@@ -74,7 +80,9 @@ class _EventCardState extends State<EventCard> {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Colors.black.withOpacity(0.75),
+                              Color(
+                                int.parse(widget.event.borderColor),
+                              ).withOpacity(0.50),
                               Colors.transparent,
                             ],
                           ),
@@ -118,11 +126,13 @@ class _EventCardState extends State<EventCard> {
                                   onPressed: () =>
                                       setState(() => isFavorite = !isFavorite),
                                   icon: Icon(
-                                    isFavorite
+                                    isFav
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                    color: isFavorite
-                                        ? Theme.of(context).colorScheme.primary
+                                    color: isFav
+                                        ? Color(
+                                            int.parse(widget.event.borderColor),
+                                          )
                                         : Colors.white,
                                     size: 20,
                                   ),
@@ -170,7 +180,7 @@ class _EventCardState extends State<EventCard> {
                                         event.location,
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Colors.white.withOpacity(0.5),
+                                          color: Colors.white.withOpacity(0.70),
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                       ),

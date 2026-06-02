@@ -1,27 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vynce_frontend/core/injector.dart';
+import 'package:vynce_frontend/features/events/data/services/categories_service.dart';
 
 class CategoryBadges extends StatefulWidget {
-  const CategoryBadges({
-    super.key,
-    required this.categories,
-    required this.onTap,
-    required,
-  });
+  const CategoryBadges({super.key, required});
 
-  final List<String> categories;
-  final Function(String) onTap;
   @override
   State<CategoryBadges> createState() => _CategoryBadgesState();
 }
 
 class _CategoryBadgesState extends State<CategoryBadges> {
   String? _selected;
+  List<String> categories = [];
+  final CategoriesService _categoriesService = getIt<CategoriesService>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadCategories();
+    });
+  }
+
+  Future<void> loadCategories() async {
+    final result = await _categoriesService.getCategories();
+
+    setState(() {
+      categories = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: widget.categories.map((cat) {
+        children: categories.map((cat) {
           final isActive = _selected == cat;
           return GestureDetector(
             onTap: () => tapCategory(cat),
@@ -33,7 +47,10 @@ class _CategoryBadgesState extends State<CategoryBadges> {
                     ? Theme.of(context).colorScheme.primary
                     : Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Theme.of(context).colorScheme.primary,width: 1)
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1,
+                ),
               ),
               child: Text(
                 cat,
@@ -55,6 +72,11 @@ class _CategoryBadgesState extends State<CategoryBadges> {
     setState(() {
       _selected = _selected == cat ? null : cat; // toggle
     });
-    widget.onTap(cat);
+    context.push(
+      Uri(
+        path: '/events-filtered',
+        queryParameters: {'category': cat},
+      ).toString(),
+    );
   }
 }

@@ -1,21 +1,39 @@
 import 'package:go_router/go_router.dart';
 import 'package:vynce_frontend/features/events/presentation/pages/event_page.dart';
 import 'package:vynce_frontend/features/events/presentation/pages/events_page.dart';
+import 'package:vynce_frontend/features/events/presentation/pages/filtered_events_page.dart';
+import 'package:vynce_frontend/navigation/widgets/events_navigation_shell.dart';
 import 'package:vynce_frontend/navigation/widgets/main_navigation_bar.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/events',
+
   routes: [
     ShellRoute(
       builder: (context, state, child) => MainNavingationBar(child: child),
       routes: [
-        GoRoute(path: '/events', builder: (_, __) => const EventsPage()),
-        // GoRoute(path: '/map', builder: (_, __) => const MapPage()),
-        // GoRoute(path: '/chat', builder: (_, __) => const ChatPage()),
-        // GoRoute(path: '/profile', builder: (_, __) => const ProfilePage()),
+        ShellRoute(
+          builder: (context, state, child) =>
+              EventsNavigationShell(child: child),
+          routes: [
+            GoRoute(
+              path: '/events',
+              builder: (_, __) => const EventsPage(),
+              routes: [
+                GoRoute(
+                  path: ':id', // vira /events/:id
+                  builder: (_, state) =>
+                      EventPage(id: state.pathParameters['id']!),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: '/events-filtered',
+              builder: (_, __) => const FilteredEventsPage(),
+            ),
+          ],
+        ),
       ],
     ),
-    // GoRoute(path: '/events/new', builder: (_, __) => const NewEventPage()),
-    GoRoute(path: '/events/:id', builder: (_, state) => EventPage(id: state.pathParameters['id']!)),
   ],
 );

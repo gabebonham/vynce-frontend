@@ -5,19 +5,19 @@ import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
 import 'package:vynce_frontend/features/events/data/services/event_service.dart';
 import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/event_card.dart';
+import 'package:vynce_frontend/features/events/presentation/widgets/favorite_event_card.dart';
 
-class FeaturedSection extends StatefulWidget {
-  const FeaturedSection({super.key});
+class FavoritesSection extends StatefulWidget {
+  const FavoritesSection({super.key});
   @override
-  State<FeaturedSection> createState() => _FeaturedSectionState();
+  State<FavoritesSection> createState() => _FavoritesSectionState();
 }
 
-class _FeaturedSectionState extends State<FeaturedSection> {
+class _FavoritesSectionState extends State<FavoritesSection> {
   final EventsService _eventsService = getIt<EventsService>();
   final ProfileService _profileService = getIt<ProfileService>();
   List<EventModel> events = [];
   ProfileModel? profile;
-
   @override
   void initState() {
     super.initState();
@@ -54,7 +54,7 @@ class _FeaturedSectionState extends State<FeaturedSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'EM DESTAQUE',
+            'SEUS FAVORITOS',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight(600),
@@ -66,7 +66,16 @@ class _FeaturedSectionState extends State<FeaturedSection> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: events
-                  .map((e) => EventCard(event: e, profile: profile))
+                  .map(
+                    (e) => FavoriteEventCard(
+                      event: e,
+                      profile: profile,
+                      onFavTap: (eventId) async {
+                        // Handle favorite tap logic here
+                        return true;
+                      },
+                    ),
+                  )
                   .toList(),
             ),
           ),

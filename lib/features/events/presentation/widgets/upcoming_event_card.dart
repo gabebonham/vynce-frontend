@@ -29,12 +29,16 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
     return '$diff';
   }
 
+  bool isEventFavorited() {
+    final profile = widget.profile;
+    return profile?.favoriteEvents.any((e) => e == widget.event.id) ?? false;
+  }
+
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     final hour = DateFormat('HH:mm').format(widget.event.date.toLocal());
-    final date = DateFormat('dd').format(widget.event.date.toLocal());
-    final month = DateFormat('MMM').format(widget.event.date.toLocal());
+    bool isFav = isEventFavorited();
     return SizedBox(
       width: double.infinity,
       height: 110,
@@ -85,7 +89,9 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Colors.black.withOpacity(0.75),
+                              Color(
+                                int.parse(widget.event.borderColor),
+                              ).withOpacity(0.75),
                               Colors.transparent,
                             ],
                           ),
@@ -197,34 +203,39 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ],
-                                        ),Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface.withOpacity(0.30),
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.surface.withOpacity(0.3),
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    widget.event.category,
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.surface,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withOpacity(0.30),
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            border: Border.all(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .surface
+                                                  .withOpacity(0.3),
+                                              width: 1,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            widget.event.category,
+                                            style: TextStyle(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.surface,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -239,11 +250,13 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
                                     }
                                   },
                                   icon: Icon(
-                                    isFavorite
+                                    isFav
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                    color: isFavorite
-                                        ? Theme.of(context).colorScheme.primary
+                                    color: isFav
+                                        ? Color(
+                                            int.parse(widget.event.borderColor),
+                                          )
                                         : Colors.white,
                                     size: 20,
                                   ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vynce_frontend/features/events/data/models/event_filter.dart';
+import 'package:vynce_frontend/features/events/presentation/widgets/filter_dialog.dart';
 
 class SearchEvent extends StatefulWidget {
   const SearchEvent({super.key});
@@ -8,6 +11,12 @@ class SearchEvent extends StatefulWidget {
 }
 
 class _SearchEventState extends State<SearchEvent> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  EventFilter? currentFilter;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,9 +41,76 @@ class _SearchEventState extends State<SearchEvent> {
               ),
             ),
           ),
-          const Icon(Icons.tune, size: 18, color: Colors.black54),
+          IconButton(
+            icon: const Icon(Icons.tune, size: 18, color: Colors.black38),
+            onPressed: () {
+              final currentFilter = getFilters(context);
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (_) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(
+                      context,
+                    ).viewInsets.bottom, // <- sobe com teclado
+                  ),
+                  child: EventFilterModal(
+                    initialFilter: currentFilter,
+                    onApply: (filter) {
+                      applyFilters(filter);
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
+    );
+  }
+
+  EventFilter getFilters(BuildContext context) {
+    final category = GoRouterState.of(context).uri.queryParameters['category'];
+    final minParticipants = int.tryParse(
+      GoRouterState.of(context).uri.queryParameters['minParticipants'] ?? '0',
+    );
+    final maxDistanceKm = double.tryParse(
+      GoRouterState.of(context).uri.queryParameters['maxDistanceKm'] ?? '100',
+    );
+    final dateRange = GoRouterState.of(
+      context,
+    ).uri.queryParameters['dateRange'];
+    final onlyFavorites = bool.tryParse(
+      GoRouterState.of(context).uri.queryParameters['onlyFavorites'] ?? 'false',
+    );
+    return EventFilter(
+      category: category,
+      minParticipants: minParticipants ?? 0,
+      maxDistanceKm: maxDistanceKm ?? 100,
+      dateRange: dateRange,
+      onlyFavorites: onlyFavorites ?? false,
+    );
+  }
+
+  void applyFilters(EventFilter filter) {
+    EventFilter finalFilter = filter;
+    if (finalFilter.category == null && currentFilter?.category != null) {
+      finalFilter = finalFilter.copyWith(category: currentFilter?.category);
+    }
+
+    context.push(
+      Uri(
+        path: '/events-filtered',
+        queryParameters: {
+          if (finalFilter.category != null) 'category': finalFilter.category!,
+          'minParticipants': finalFilter.minParticipants.toString(),
+          'maxDistanceKm': finalFilter.maxDistanceKm.toString(),
+          if (finalFilter.dateRange != null)
+            'dateRange': finalFilter.dateRange!,
+          'onlyFavorites': finalFilter.onlyFavorites.toString(),
+        },
+      ).toString(),
     );
   }
 }
