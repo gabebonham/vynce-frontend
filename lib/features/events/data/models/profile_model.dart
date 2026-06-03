@@ -14,7 +14,7 @@ class ProfileModel {
   final DateTime createdAt;
 
   final List<String> favoriteEvents;
-
+  double? rating;
   ProfileModel({
     required this.id,
     required this.name,
@@ -24,6 +24,7 @@ class ProfileModel {
     required this.createdAt,
     required this.favoriteEvents,
     required this.pendingMatches,
+    this.rating,
   });
   static List<ProfileModel> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => ProfileModel.fromJson(json)).toList();
@@ -34,6 +35,7 @@ class ProfileModel {
       id: json['id'],
       name: json['name'],
       email: json['email'],
+      rating: (json['rating'] as num?)?.toDouble(),
       avatarUrl: json['avatarUrl'],
       location: json['location'],
       favoriteEvents: List<String>.from(json['favoriteEvents']),
@@ -51,7 +53,7 @@ class ProfileModel {
       'email': email,
 
       'location': location,
-
+      'rating': rating,
       'avatarUrl': avatarUrl,
 
       'pendingMatches': pendingMatches,

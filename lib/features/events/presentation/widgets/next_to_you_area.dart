@@ -16,7 +16,7 @@ class NextToYouArea extends StatefulWidget {
 class _NextToYouAreaState extends State<NextToYouArea> {
   final EventsService _eventsService = getIt<EventsService>();
   final ProfileService _profileService = getIt<ProfileService>();
-  
+
   List<EventModel> events = [];
   ProfileModel? profile;
   @override
@@ -25,6 +25,7 @@ class _NextToYouAreaState extends State<NextToYouArea> {
     loadEvents();
     loadProfile();
   }
+
   Future<void> loadProfile() async {
     final result = await _profileService.getProfile('1');
 
@@ -37,7 +38,7 @@ class _NextToYouAreaState extends State<NextToYouArea> {
   void dispose() {
     super.dispose();
   }
-  
+
   Future<void> loadEvents() async {
     final result = await _eventsService.getEvents();
 
@@ -45,13 +46,15 @@ class _NextToYouAreaState extends State<NextToYouArea> {
       events = result;
     });
   }
-  Future<bool> onFavTap(String eventId) async {
-    if(profile == null) return false;
 
-    final result = await _eventsService.favoriteEvent(profile!.id, eventId);
+  Future<bool> onFavTap(String eventId) async {
+    if (profile == null) return false;
+
+    final result = await _eventsService.favoriteEvent(eventId);
 
     return result;
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -68,7 +71,15 @@ class _NextToYouAreaState extends State<NextToYouArea> {
         SizedBox(height: 12),
         Column(
           spacing: 14,
-          children: events.map((e) => MinimalEventCard(event: e, profile: profile, onFavTap: onFavTap)).toList(),
+          children: events
+              .map(
+                (e) => MinimalEventCard(
+                  event: e,
+                  profile: profile,
+                  onFavTap: onFavTap,
+                ),
+              )
+              .toList(),
         ),
       ],
     );

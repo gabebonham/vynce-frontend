@@ -7,11 +7,9 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
 
-    textTheme:
-        GoogleFonts.aBeeZeeTextTheme(),
+    textTheme: GoogleFonts.aBeeZeeTextTheme(),
 
-    scaffoldBackgroundColor:
-        AppColors.light,
+    scaffoldBackgroundColor: AppColors.light,
 
     colorScheme: ColorScheme.light(
       primary: AppColors.pink,
@@ -26,7 +24,9 @@ class AppTheme {
 
       onSurface: AppColors.dark,
 
-      error: AppColors.red
+      error: AppColors.red,
+
+      tertiary: AppColors.darkerLight,
     ),
   );
 }

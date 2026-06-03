@@ -27,7 +27,7 @@ class _MainNavingationBarState extends State<MainNavingationBar> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         height: 70,
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.tertiary,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -85,7 +85,9 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? Theme.of(context).colorScheme.primary : Colors.grey;
+    final color = active
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.secondary.withOpacity(0.7);
 
     return GestureDetector(
       onTap: onTap,

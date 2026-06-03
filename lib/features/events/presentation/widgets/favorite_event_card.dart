@@ -78,7 +78,7 @@ class _FavoriteEventCardState extends State<FavoriteEventCard> {
                             end: Alignment.topCenter,
                             colors: [
                               Color(
-                                int.parse(widget.event.borderColor),
+                                int.parse(widget.event.color),
                               ).withOpacity(0.6),
                               Colors.transparent,
                             ],

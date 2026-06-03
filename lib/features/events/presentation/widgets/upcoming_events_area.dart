@@ -50,7 +50,7 @@ class _UpcomingEventsAreaState extends State<UpcomingEventsArea> {
   Future<bool> onFavTap(String eventId) async {
     if (profile == null) return false;
 
-    final result = await _eventsService.favoriteEvent(profile!.id, eventId);
+    final result = await _eventsService.favoriteEvent(eventId);
 
     return result;
   }
@@ -84,5 +84,4 @@ class _UpcomingEventsAreaState extends State<UpcomingEventsArea> {
       ],
     );
   }
-
 }

@@ -9,24 +9,20 @@ final appRouter = GoRouter(
   initialLocation: '/events',
 
   routes: [
+    GoRoute(path: '/', redirect: (_, _) => '/events'),
+
     ShellRoute(
       builder: (context, state, child) => MainNavingationBar(child: child),
       routes: [
+        GoRoute(
+          path: '/events/:id', // vira /events/:id
+          builder: (_, state) => EventPage(id: state.pathParameters['id']!),
+        ),
         ShellRoute(
           builder: (context, state, child) =>
               EventsNavigationShell(child: child),
           routes: [
-            GoRoute(
-              path: '/events',
-              builder: (_, __) => const EventsPage(),
-              routes: [
-                GoRoute(
-                  path: ':id', // vira /events/:id
-                  builder: (_, state) =>
-                      EventPage(id: state.pathParameters['id']!),
-                ),
-              ],
-            ),
+            GoRoute(path: '/events', builder: (_, __) => const EventsPage()),
             GoRoute(
               path: '/events-filtered',
               builder: (_, __) => const FilteredEventsPage(),

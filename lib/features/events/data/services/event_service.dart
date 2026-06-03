@@ -88,7 +88,7 @@ class EventsService {
     return eventDate.isAfter(start) && eventDate.isBefore(end);
   }
 
-  Future<bool> favoriteEvent(String profileId, String id) async {
+  Future<bool> favoriteEvent(String id) async {
     return Future(() => true);
   }
 }

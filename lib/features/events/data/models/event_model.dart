@@ -1,3 +1,5 @@
+import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+
 class EventModel {
   final String id;
 
@@ -8,14 +10,21 @@ class EventModel {
   final String imageUrl;
 
   final String location;
+  final String city;
+
+  final String fullLocation;
 
   final String category;
 
-  final String borderColor;
+  final String color;
 
   final DateTime date;
 
   final int participantsCount;
+  final int maxParticipants;
+
+  final ProfileModel host;
+  final int? price;
 
   EventModel({
     required this.id,
@@ -23,44 +32,42 @@ class EventModel {
     required this.description,
     required this.imageUrl,
     required this.location,
+    required this.city,
     required this.category,
-    required this.borderColor,
+    required this.fullLocation,
+    required this.color,
     required this.date,
     required this.participantsCount,
+    required this.maxParticipants,
+    required this.host,
+    required this.price,
   });
-  static List<EventModel> fromJsonList(
-    List<dynamic> jsonList,
-  ) {
-    return jsonList
-        .map(
-          (json) =>
-              EventModel.fromJson(json),
-        )
-        .toList();
+  static List<EventModel> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => EventModel.fromJson(json)).toList();
   }
-  factory EventModel.fromJson(
-    Map<String, dynamic> json,
-  ) {
+
+  factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
       id: json['id'],
 
       title: json['title'],
+      host: ProfileModel.fromJson(json['host']),
+      description: json['description'],
 
-      description:
-          json['description'],
+      fullLocation: json['fullLocation'],
+      city: json['city'],
 
       imageUrl: json['imageUrl'],
+      maxParticipants: json['maxParticipants'],
+      price: json['price'],
 
       location: json['location'],
       category: json['category'],
-      borderColor: json['borderColor'],
+      color: json['color'],
 
-      date: DateTime.parse(
-        json['date'],
-      ),
+      date: DateTime.parse(json['date']),
 
-      participantsCount:
-          json['participantsCount'],
+      participantsCount: json['participantsCount'],
     );
   }
 
@@ -69,18 +76,20 @@ class EventModel {
       'id': id,
 
       'title': title,
+      'price': price,
 
       'description': description,
-
+      'host': host,
       'imageUrl': imageUrl,
-
+      'fullLocation': fullLocation,
       'location': location,
       'category': category,
-      'borderColor': borderColor,
+      'color': color,
+      'maxParticipants': maxParticipants,
+      'city': city,
       'date': date.toIso8601String(),
 
-      'participantsCount':
-          participantsCount,
+      'participantsCount': participantsCount,
     };
   }
 }

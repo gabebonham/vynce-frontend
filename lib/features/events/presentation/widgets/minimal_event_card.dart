@@ -35,7 +35,7 @@ class _MinimalEventCardState extends State<MinimalEventCard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: BorderSide(
-              color: Color(int.parse(widget.event.borderColor)),
+              color: Color(int.parse(widget.event.color)),
               width: 1,
             ),
           ),
@@ -50,7 +50,7 @@ class _MinimalEventCardState extends State<MinimalEventCard> {
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
                       width: 2,
-                      color: Color(int.parse(widget.event.borderColor)),
+                      color: Color(int.parse(widget.event.color)),
                     ),
                   ),
                   child: ClipRRect(
@@ -129,7 +129,7 @@ class _CardDescriptionState extends State<CardDescription> {
         content: Text(
           _isFavorited ? 'Evento favoritado!' : 'Removido dos favoritos',
         ),
-        backgroundColor: Color(int.parse(widget.event.borderColor)),
+        backgroundColor: Color(int.parse(widget.event.color)),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -141,7 +141,7 @@ class _CardDescriptionState extends State<CardDescription> {
   @override
   Widget build(BuildContext context) {
     final color = _isFavorited
-        ? Color(int.parse(widget.event.borderColor))
+        ? Color(int.parse(widget.event.color))
         : Colors.grey;
 
     return Column(
@@ -184,7 +184,7 @@ class _CardDescriptionState extends State<CardDescription> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Color(int.parse(widget.event.borderColor)),
+              color: Color(int.parse(widget.event.color)),
               width: 1,
             ),
           ),
@@ -192,7 +192,7 @@ class _CardDescriptionState extends State<CardDescription> {
             widget.event.category,
             style: TextStyle(
               fontSize: 10,
-              color: Color(int.parse(widget.event.borderColor)),
+              color: Color(int.parse(widget.event.color)),
             ),
           ),
         ),
