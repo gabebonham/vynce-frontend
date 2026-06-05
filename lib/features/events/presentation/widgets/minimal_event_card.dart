@@ -132,7 +132,7 @@ class _CardDescriptionState extends State<CardDescription> {
         backgroundColor: Color(int.parse(widget.event.color)),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.all(8),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -145,7 +145,7 @@ class _CardDescriptionState extends State<CardDescription> {
         : Colors.grey;
 
     return Column(
-      spacing: 4,
+      spacing: 2,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -158,15 +158,13 @@ class _CardDescriptionState extends State<CardDescription> {
                 style: const TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
-            IconButton(
-              icon: Icon(
+            GestureDetector(
+              onTap: _toggleFavorite,
+              child: Icon(
                 _isFavorited ? Icons.favorite : Icons.favorite_outline,
                 color: color,
                 size: 18,
               ),
-              padding: EdgeInsets.zero, // <- remove padding
-              constraints: const BoxConstraints(),
-              onPressed: _toggleFavorite,
             ),
           ],
         ),
@@ -174,7 +172,7 @@ class _CardDescriptionState extends State<CardDescription> {
           '${DateFormat('dd/MM').format(widget.event.date)} • ${widget.event.location}',
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 10,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
           ),
         ),
@@ -191,15 +189,15 @@ class _CardDescriptionState extends State<CardDescription> {
           child: Text(
             widget.event.category,
             style: TextStyle(
-              fontSize: 10,
+              fontSize: 8,
               color: Color(int.parse(widget.event.color)),
             ),
           ),
         ),
         Text(
-          '${widget.event.participantsCount} participantes',
+          '${widget.event.participantsCount} irão',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 10,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
           ),
         ),

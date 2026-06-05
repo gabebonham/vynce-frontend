@@ -126,7 +126,7 @@ class _EventPageState extends State<EventPage> {
               ),
               _remainingDetails(),
               Padding(
-                padding: EdgeInsetsGeometry.fromLTRB(22, 22, 22, 0),
+                padding: EdgeInsetsGeometry.fromLTRB(22, 0, 22, 0),
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -288,96 +288,101 @@ class _EventPageState extends State<EventPage> {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(28, 28, 28, 28),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.08),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.calendar_today_outlined, size: 16, color: color),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Data',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.5),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Container(
+                height: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.calendar_today_outlined, size: 16, color: color),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Data',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withOpacity(0.5),
+                            ),
                           ),
-                        ),
-                        Text(
-                          getFullDate(),
-                          maxLines: 3,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.75),
+                          Text(
+                            getFullDate(),
+                            maxLines: 3,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withOpacity(0.75),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.08),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.location_on, size: 16, color: color),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Local',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.5),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Container(
+                height: double.infinity,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on, size: 16, color: color),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Local',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withOpacity(0.5),
+                            ),
                           ),
-                        ),
-                        Text(
-                          event?.fullLocation ?? '',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.75),
+                          Text(
+                            event?.fullLocation ?? '',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withOpacity(0.75),
+                            ),
+                            maxLines: 3,
                           ),
-                          maxLines: 3,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -513,7 +518,7 @@ class _EventPageState extends State<EventPage> {
   Widget _remainingDetails() {
     if (event == null) return const SizedBox.shrink();
     return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 26),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -582,7 +587,13 @@ class _EventPageState extends State<EventPage> {
               color: Theme.of(context).colorScheme.secondary,
               size: 32,
             ),
-            Column(children: [Text(event!.fullLocation), Text(event!.city)]),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(event!.fullLocation, textAlign: TextAlign.center),
+                Text(event!.city, textAlign: TextAlign.center),
+              ],
+            ),
 
             // descrição embaixo
             SizedBox(

@@ -70,13 +70,21 @@ class _CategoryBadgesState extends State<CategoryBadges> {
 
   void tapCategory(String cat) {
     setState(() {
-      _selected = _selected == cat ? null : cat; // toggle
+      _selected = cat; // sem toggle, seleciona direto
     });
-    context.push(
-      Uri(
-        path: '/events-filtered',
-        queryParameters: {'category': cat},
-      ).toString(),
-    );
+
+    context
+        .push(
+          Uri(
+            path: '/events-filtered',
+            queryParameters: {'category': cat},
+          ).toString(),
+        )
+        .then((_) {
+          // quando voltar da página, limpa a seleção
+          setState(() {
+            _selected = null;
+          });
+        });
   }
 }

@@ -4,6 +4,9 @@ import 'package:vynce_frontend/core/theme/app_theme.dart';
 import 'package:vynce_frontend/routes/app_router.dart'; // <-- adiciona
 import 'package:intl/date_symbol_data_local.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
 void main() async {
   setupInjector();
   WidgetsFlutterBinding.ensureInitialized();

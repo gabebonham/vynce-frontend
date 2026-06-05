@@ -41,7 +41,7 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
     bool isFav = isEventFavorited();
     return SizedBox(
       width: double.infinity,
-      height: 110,
+      height: 120,
       child: InkWell(
         onTap: () => context.push('/events/${widget.event.id}'),
         borderRadius: BorderRadius.circular(20),
@@ -69,7 +69,7 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: 102,
+                      height: 112,
                       child: Image.network(
                         widget.event.imageUrl,
                         fit: BoxFit.cover,
@@ -103,142 +103,147 @@ class _UpcomingEventCardState extends State<UpcomingEventCard> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  spacing: 14,
-                                  children: [
-                                    Container(
-                                      width: 75,
-                                      height: 75,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 9,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface
-                                            .withOpacity(0.30),
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
+                                Expanded(
+                                  child: Row(
+                                    spacing: 14,
+                                    children: [
+                                      Container(
+                                        width: 77,
+                                        height: 77,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 9,
+                                        ),
+                                        decoration: BoxDecoration(
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .surface
-                                              .withOpacity(0.3),
-                                          width: 1,
+                                              .onSurface
+                                              .withOpacity(0.30),
+                                          borderRadius: BorderRadius.circular(
+                                            14,
+                                          ),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .surface
+                                                .withOpacity(0.3),
+                                            width: 1,
+                                          ),
                                         ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            daysUntilEvent(
-                                              widget.event.date.toLocal(),
-                                            ),
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.surface,
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Text(
-                                            'dias',
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.surface,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      spacing: 2,
-                                      children: [
-                                        Text(
-                                          widget.event.title,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-
-                                        Row(
+                                        child: Column(
                                           children: [
                                             Text(
-                                              widget.event.location,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white.withOpacity(
-                                                  0.5,
-                                                ),
+                                              daysUntilEvent(
+                                                widget.event.date.toLocal(),
                                               ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              ' • ',
                                               style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white.withOpacity(
-                                                  0.5,
-                                                ),
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.surface,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             Text(
-                                              hour,
+                                              'dias',
                                               style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white.withOpacity(
-                                                  0.5,
-                                                ),
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.surface,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ],
                                         ),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 4,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withOpacity(0.30),
-                                            borderRadius: BorderRadius.circular(
-                                              20,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          spacing: 2,
+                                          children: [
+                                            Text(
+                                              widget.event.title,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                            border: Border.all(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .surface
-                                                  .withOpacity(0.3),
-                                              width: 1,
+
+                                            Row(
+                                              children: [
+                                                Flexible(
+                                                  // ✅
+                                                  child: Text(
+                                                    widget.event.location,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white
+                                                          .withOpacity(0.5),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ' • ',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.white
+                                                        .withOpacity(0.5),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  hour,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.white
+                                                        .withOpacity(0.5),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          child: Text(
-                                            widget.event.category,
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.surface,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 4,
+                                                  ),
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface
+                                                    .withOpacity(0.30),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .surface
+                                                      .withOpacity(0.3),
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                widget.event.category,
+                                                style: TextStyle(
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).colorScheme.surface,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () async {

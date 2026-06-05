@@ -21,11 +21,18 @@ class FavoriteEventCard extends StatefulWidget {
 }
 
 class _FavoriteEventCardState extends State<FavoriteEventCard> {
+  bool isFavorite = false;
+  bool isEventFavorited() {
+    final profile = widget.profile;
+    return profile?.favoriteEvents.any((e) => e == widget.event.id) ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     String locTime = DateFormat(
       'dd MMM • HH:mm',
     ).format(widget.event.date.toLocal());
+    isFavorite = isEventFavorited();
     return SizedBox(
       width: 220,
       height: 228,
@@ -123,16 +130,20 @@ class _FavoriteEventCardState extends State<FavoriteEventCard> {
                             ),
                             Row(
                               children: [
-                                Text(
-                                  widget.event.location,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.white54,
+                                Flexible(
+                                  // ✅
+                                  child: Text(
+                                    widget.event.location,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.white54,
+                                    ),
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   ' • ',
-                                  style: const TextStyle(color: Colors.white54),
+                                  style: TextStyle(color: Colors.white54),
                                 ),
                                 Text(
                                   widget.event.participantsCount.toString(),
@@ -141,9 +152,9 @@ class _FavoriteEventCardState extends State<FavoriteEventCard> {
                                     color: Colors.white54,
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   ' irão',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 11,
                                     color: Colors.white54,
                                   ),
@@ -169,9 +180,13 @@ class _FavoriteEventCardState extends State<FavoriteEventCard> {
                                   onPressed: () {},
                                   padding: EdgeInsets.zero,
                                   constraints: const BoxConstraints(),
-                                  icon: const Icon(
-                                    Icons.favorite_outline,
-                                    color: Color(0xFFD4537E),
+                                  icon: Icon(
+                                    isFavorite
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     size: 18,
                                   ),
                                 ),
