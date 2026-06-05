@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vynce_frontend/features/map/models/place_result_model.dart';
 
 class MapService {
+  final Dio dio;
+
+  MapService(this.dio);
   Future<LatLng> getCurrentLocation() async {
     await Future.delayed(const Duration(milliseconds: 500)); // simula latência
     return const LatLng(-30.0346, -51.2177); // Porto Alegre

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vynce_frontend/core/utils/distance_utils.dart';
 import 'package:vynce_frontend/features/events/data/models/event_filter.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
 import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
@@ -90,5 +92,48 @@ class EventsService {
 
   Future<bool> favoriteEvent(String id) async {
     return Future(() => true);
+  }
+
+  Future<List<EventModel>> getNearbyEvents(
+    LatLng origin, {
+    double radiusKm = 1000,
+    EventFilter? filter,
+  }) async {
+    final String response = await rootBundle.loadString(
+      'assets/mocks/events_mocks.json',
+    );
+
+    final List data = jsonDecode(response);
+    final events = data.map((e) => EventModel.fromJson(e)).toList();
+
+    // carrega profile só se precisar filtrar favoritos
+    ProfileModel? profile;
+    if (filter?.onlyFavorites == true) {
+      final String profileRaw = await rootBundle.loadString(
+        'assets/mocks/profile_mock.json',
+      );
+      profile = ProfileModel.fromJson(jsonDecode(profileRaw));
+    }
+
+    return events.where((event) {
+      final distance = calculateDistanceKm(
+        origin.latitude,
+        origin.longitude,
+        event.lat,
+        event.lng,
+      );
+
+      if (distance > (filter?.maxDistanceKm ?? radiusKm)) return false;
+      if (filter == null) return true;
+      if (filter.category != null && event.category != filter.category)
+        return false;
+      if (event.participantsCount < filter.minParticipants) return false;
+      if (filter.onlyFavorites &&
+          !(profile?.favoriteEvents.contains(event.id) ?? false))
+        return false;
+      if (!_matchesDateRange(event.date, filter.dateRange)) return false;
+
+      return true;
+    }).toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
+import 'package:vynce_frontend/features/map/services/map_service.dart';
 
 import '../features/events/data/services/event_service.dart';
 import '../features/events/data/services/categories_service.dart';
@@ -13,6 +14,7 @@ void setupInjector() {
   );
 
   getIt.registerLazySingleton<EventsService>(() => EventsService(getIt<Dio>()));
+  getIt.registerLazySingleton<MapService>(() => MapService(getIt<Dio>()));
   getIt.registerLazySingleton<CategoriesService>(
     () => CategoriesService(getIt<Dio>()),
   );

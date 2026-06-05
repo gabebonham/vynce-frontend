@@ -25,7 +25,8 @@ class EventModel {
 
   final ProfileModel host;
   final int? price;
-
+  final double lat;
+  final double lng;
   EventModel({
     required this.id,
     required this.title,
@@ -41,6 +42,8 @@ class EventModel {
     required this.maxParticipants,
     required this.host,
     required this.price,
+    required this.lat,
+    required this.lng,
   });
   static List<EventModel> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => EventModel.fromJson(json)).toList();
@@ -66,7 +69,8 @@ class EventModel {
       color: json['color'],
 
       date: DateTime.parse(json['date']),
-
+      lat: json['lat'],
+      lng: json['lng'],
       participantsCount: json['participantsCount'],
     );
   }
@@ -87,6 +91,8 @@ class EventModel {
       'color': color,
       'maxParticipants': maxParticipants,
       'city': city,
+      'lng': lng,
+      'lat': lat,
       'date': date.toIso8601String(),
 
       'participantsCount': participantsCount,
