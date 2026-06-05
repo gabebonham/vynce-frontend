@@ -1,5 +1,6 @@
 class EventFilter {
   late String? category;
+  late String? title;
   late int minParticipants;
   late double maxDistanceKm;
   late String? dateRange;
@@ -7,6 +8,7 @@ class EventFilter {
 
   EventFilter({
     this.category,
+    this.title,
     this.minParticipants = 0,
     this.maxDistanceKm = 100,
     this.dateRange,
@@ -14,18 +16,22 @@ class EventFilter {
   });
 
   EventFilter copyWith({
-    String? category,
+    Object? category = _unset,
+    Object? title = _unset,
     int? minParticipants,
     double? maxDistanceKm,
-    String? dateRange,
+    Object? dateRange = _unset,
     bool? onlyFavorites,
   }) {
     return EventFilter(
-      category: category ?? this.category,
+      category: category == _unset ? this.category : category as String?,
+      title: title == _unset ? this.title : title as String?,
       minParticipants: minParticipants ?? this.minParticipants,
       maxDistanceKm: maxDistanceKm ?? this.maxDistanceKm,
-      dateRange: dateRange ?? this.dateRange,
+      dateRange: dateRange == _unset ? this.dateRange : dateRange as String?,
       onlyFavorites: onlyFavorites ?? this.onlyFavorites,
     );
   }
 }
+
+const _unset = Object();

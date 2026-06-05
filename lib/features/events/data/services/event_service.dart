@@ -99,6 +99,7 @@ class EventsService {
     double radiusKm = 1000,
     EventFilter? filter,
   }) async {
+    print('filter.title: ${filter?.title}');
     final String response = await rootBundle.loadString(
       'assets/mocks/events_mocks.json',
     );
@@ -125,6 +126,12 @@ class EventsService {
 
       if (distance > (filter?.maxDistanceKm ?? radiusKm)) return false;
       if (filter == null) return true;
+
+      // título: sem early return, vira mais um predicado na chain
+      if (filter.title != null &&
+          !event.title.toLowerCase().contains(filter.title!.toLowerCase()))
+        return false;
+
       if (filter.category != null && event.category != filter.category)
         return false;
       if (event.participantsCount < filter.minParticipants) return false;

@@ -2,11 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:vynce_frontend/core/injector.dart';
 import 'package:vynce_frontend/features/events/data/models/event_filter.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/services/event_service.dart';
-import 'package:vynce_frontend/features/map/services/map_service.dart';
 
 class MapScreen extends StatefulWidget {
   final EventFilter filter;
@@ -37,7 +34,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void didUpdateWidget(MapScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.filter != widget.filter) {
+    if (oldWidget.events != widget.events) {
       _loadEventMarkers();
     }
   }
