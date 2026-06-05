@@ -19,10 +19,18 @@
       "name": "Aurora",
       "email": "aurora@example.com",
       "avatarUrl": "https://picsum.photos/500/300?10",
-      "location": "Porto Alegre",
-      "favoriteEvents": ["1", "3", "5"],
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
       "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
       "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
       "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
@@ -43,15 +51,23 @@
     "participantsCount": 210,
     "maxParticipants": 600,
     "host": {
-      "id": "2",
-      "name": "Léo Marques",
-      "email": "leo@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?20",
-      "location": "Porto Alegre",
-      "favoriteEvents": ["2", "4"],
-      "rating": 5,
-      "pendingMatches": 1,
-      "createdAt": "2025-11-05T00:00:00.000Z"
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+      "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -70,15 +86,23 @@
     "participantsCount": 98,
     "maxParticipants": 150,
     "host": {
-      "id": "3",
-      "name": "Camila Dev",
-      "email": "camila@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?30",
-      "location": "São Leopoldo",
-      "favoriteEvents": ["3", "8"],
-      "rating": 5,
-      "pendingMatches": 0,
-      "createdAt": "2025-06-01T00:00:00.000Z"
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+      "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -98,15 +122,23 @@
     "participantsCount": 340,
     "maxParticipants": 400,
     "host": {
-      "id": "4",
-      "name": "Beatriz Rech",
-      "email": "beatriz@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?40",
-      "location": "Gramado",
-      "favoriteEvents": ["4", "9"],
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
       "rating": 4,
-      "pendingMatches": 2,
-      "createdAt": "2025-03-20T00:00:00.000Z"
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -129,10 +161,18 @@
       "name": "Aurora",
       "email": "aurora@example.com",
       "avatarUrl": "https://picsum.photos/500/300?10",
-      "location": "Florianópolis",
-      "favoriteEvents": ["1", "3", "5"],
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
       "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
       "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
       "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
@@ -153,15 +193,23 @@
     "participantsCount": 175,
     "price": 1500,
     "host": {
-      "id": "5",
-      "name": "Rodrigo Samba",
-      "email": "rodrigo@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?50",
-      "location": "Curitiba",
-      "favoriteEvents": ["6"],
-      "rating": 3,
-      "pendingMatches": 5,
-      "createdAt": "2025-09-15T00:00:00.000Z"
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+      "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -181,15 +229,23 @@
     "participantsCount": 142,
     "price": 2500,
     "host": {
-      "id": "6",
-      "name": "Marina Vox",
-      "email": "marina@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?60",
-      "location": "São Paulo",
-      "favoriteEvents": ["7"],
-      "rating": 5,
-      "pendingMatches": 0,
-      "createdAt": "2024-12-01T00:00:00.000Z"
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+      "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -209,15 +265,23 @@
     "participantsCount": 87,
     "price": 9900,
     "host": {
-      "id": "3",
-      "name": "Camila Dev",
-      "email": "camila@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?30",
-      "location": "Rio de Janeiro",
-      "favoriteEvents": ["3", "8"],
-      "rating": 5,
-      "pendingMatches": 0,
-      "createdAt": "2025-06-01T00:00:00.000Z"
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+      "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -237,15 +301,23 @@
     "lng": -49.3312,
     "participantsCount": 1340,
     "host": {
-      "id": "7",
-      "name": "Thiago Shows",
-      "email": "thiago@example.com",
-      "avatarUrl": "https://picsum.photos/500/300?70",
-      "location": "Goiânia",
-      "favoriteEvents": ["9"],
+      "id": "1",
+      "name": "Aurora",
+      "email": "aurora@example.com",
+      "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
+      "location": "Balneário Camboriú",
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
       "rating": 4,
-      "pendingMatches": 7,
-      "createdAt": "2024-08-10T00:00:00.000Z"
+      "followersCount": 1243,
+      "followingCount": 312,
+      "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
+      "createdAt": "2026-01-10T00:00:00.000Z"
     }
   },
   {
@@ -269,10 +341,18 @@
       "name": "Aurora",
       "email": "aurora@example.com",
       "avatarUrl": "https://picsum.photos/500/300?10",
+      "bannerUrl": "https://picsum.photos/500/300?11",
       "location": "Balneário Camboriú",
-      "favoriteEvents": ["1", "3", "5"],
+      "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
       "rating": 4,
+      "followersCount": 1243,
+      "followingCount": 312,
       "pendingMatches": 3,
+      "favoriteEvents": [
+        "1",
+        "3",
+        "5"
+      ],
       "createdAt": "2026-01-10T00:00:00.000Z"
     }
   }

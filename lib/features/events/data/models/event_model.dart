@@ -1,4 +1,4 @@
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/features/events/data/models/host_model.dart';
 
 class EventModel {
   final String id;
@@ -23,7 +23,7 @@ class EventModel {
   final int participantsCount;
   final int maxParticipants;
 
-  final ProfileModel host;
+  final HostModel? host;
   final int? price;
   final double lat;
   final double lng;
@@ -52,26 +52,24 @@ class EventModel {
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
       id: json['id'],
-
       title: json['title'],
-      host: ProfileModel.fromJson(json['host']),
       description: json['description'],
-
-      fullLocation: json['fullLocation'],
-      city: json['city'],
-
       imageUrl: json['imageUrl'],
-      maxParticipants: json['maxParticipants'],
-      price: json['price'],
-
       location: json['location'],
-      category: json['category'],
-      color: json['color'],
-
+      category: json['category'] ?? '',
+      color: json['color'] ?? '0xFF888780',
       date: DateTime.parse(json['date']),
-      lat: json['lat'],
-      lng: json['lng'],
-      participantsCount: json['participantsCount'],
+      participantsCount: json['participantsCount'] ?? 0,
+
+      city: json['city'] as String,
+      fullLocation: json['fullLocation'] as String,
+      lat: (json['lat'] as num).toDouble(),
+      lng: (json['lng'] as num).toDouble(),
+      maxParticipants: json['maxParticipants'] as int,
+      price: (json['price'] as num?)?.toInt(),
+
+      // event_model.dart
+      host: HostModel.fromJson(json['host'] as Map<String, dynamic>),
     );
   }
 
@@ -97,5 +95,27 @@ class EventModel {
 
       'participantsCount': participantsCount,
     };
+  }
+
+  // event_model.dart
+  factory EventModel.fromJsonWithoutHost(Map<String, dynamic> json) {
+    return EventModel(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      imageUrl: json['imageUrl'],
+      location: json['location'],
+      category: json['category'] ?? '',
+      color: json['color'] ?? '0xFF888780',
+      date: DateTime.parse(json['date']),
+      participantsCount: json['participantsCount'] ?? 0,
+      city: json['city'] as String,
+      fullLocation: json['fullLocation'] as String,
+      lat: (json['lat'] as num).toDouble(),
+      lng: (json['lng'] as num).toDouble(),
+      maxParticipants: json['maxParticipants'] as int,
+      price: (json['price'] as num?)?.toInt(),
+      host: null,
+    );
   }
 }

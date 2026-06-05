@@ -1,15 +1,15 @@
-  {
-    "id": "1",
-    "name": "Aurora",
-    "email": "aurora@example.com",
-    "avatarUrl": "https://picsum.photos/500/300?10",
-    "location": "Balneário Camboriú",
-    "favoriteEvents": [
-      "1",
-      "3",
-      "5"
-    ],
-    "rating":4,
-    "pendingMatches": 3,
-    "createdAt": "2026-08-02T00:00:00.000Z"
-  }
+{
+  "id": "1",
+  "name": "Aurora",
+  "email": "aurora@example.com",
+  "avatarUrl": "https://picsum.photos/500/300?10",
+  "location": "Balneário Camboriú",
+  "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+  "favoriteEvents": [
+    "1",
+    "3",
+    "5"
+  ],
+  "pendingMatches": 3,
+  "createdAt": "2026-08-02T00:00:00.000Z"
+}

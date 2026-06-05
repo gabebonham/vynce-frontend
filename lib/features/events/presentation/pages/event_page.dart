@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vynce_frontend/core/injector.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/features/events/data/models/host_model.dart';
 import 'package:vynce_frontend/features/events/data/services/event_service.dart';
 import 'package:intl/intl.dart';
-import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
+import 'package:vynce_frontend/features/events/data/services/host_service.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({super.key, required this.id});
@@ -16,9 +16,9 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   final EventsService _eventsService = getIt<EventsService>();
-  final ProfileService _profileService = getIt<ProfileService>();
+  final HostService _hostService = getIt<HostService>();
   EventModel? event;
-  ProfileModel? profile;
+  HostModel? profile;
   bool isFavorited = false;
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _EventPageState extends State<EventPage> {
   }
 
   Future<void> loadProfile() async {
-    final result = await _profileService.getProfile(widget.id);
+    final result = await _hostService.getProfile(widget.id);
 
     setState(() {
       profile = result;
@@ -446,69 +446,77 @@ class _EventPageState extends State<EventPage> {
   Widget _host() {
     if (event == null) return const SizedBox.shrink();
 
-    return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 12),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color(
-            int.parse(event?.color ?? '0xFF000000'),
-          ).withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 42, vertical: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: 10,
-            children: [
-              Row(
-                spacing: 14,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        // <- Border, não BoxBorder
-                        color: Color(int.parse(event?.color ?? '0xFF000000')),
-                      ),
-                    ),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(event!.host.avatarUrl),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () => context.push('/profile/${event!.host.id}'),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Anfitrião',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-
-                            const SizedBox(width: 16),
-                            Text(
-                              event!.host.name,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
+    return GestureDetector(
+      onTap: () {
+        final hostId = event!.host!.id;
+        if (hostId != null) {
+          context.push('/host-profile/$hostId');
+        }
+      },
+      child: Padding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 12),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color(
+              int.parse(event?.color ?? '0xFF000000'),
+            ).withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 42, vertical: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 10,
+              children: [
+                Row(
+                  spacing: 14,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Color(int.parse(event?.color ?? '0xFF000000')),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              StarRating(initialRating: event!.host.rating),
-            ],
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundImage: NetworkImage(event!.host!.avatarUrl),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              context.push('/profile/${event!.host!.id}'),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Anfitrião',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+
+                              const SizedBox(width: 16),
+                              Text(
+                                event!.host!.name,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                StarRating(initialRating: event!.host!.rating),
+              ],
+            ),
           ),
         ),
       ),
