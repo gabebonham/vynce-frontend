@@ -42,7 +42,7 @@ class _EventPageState extends State<EventPage> {
   }
 
   Future<void> loadProfile() async {
-    final result = await _hostService.getProfile(widget.id);
+    final result = await _hostService.getHost(widget.id);
 
     setState(() {
       profile = result;

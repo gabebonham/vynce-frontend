@@ -23,7 +23,7 @@ class AppTheme {
       onSecondary: Colors.green,
 
       onSurface: AppColors.dark,
-
+      background: AppColors.whiteBackground,
       error: AppColors.red,
 
       tertiary: AppColors.darkerLight,
