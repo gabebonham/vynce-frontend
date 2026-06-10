@@ -12,7 +12,7 @@ class MainNavingationBar extends StatefulWidget {
 class _MainNavingationBarState extends State<MainNavingationBar> {
   int _currentIndex = 0;
 
-  final _tabs = ['/events', '/map', '/chat', '/profile'];
+  final _tabs = ['/events', '/map', '/chats', '/profile'];
 
   void _onTap(int index) {
     setState(() => _currentIndex = index);
@@ -21,50 +21,56 @@ class _MainNavingationBarState extends State<MainNavingationBar> {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: widget.child,
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8,
-        height: 70,
-        color: Theme.of(context).colorScheme.tertiary,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _NavItem(
-              icon: Icons.calendar_today_rounded,
-              label: 'Eventos',
-              active: _currentIndex == 0,
-              onTap: () => _onTap(0),
+      bottomNavigationBar: isKeyboardOpen
+          ? null
+          : BottomAppBar(
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 8,
+              height: 70,
+              color: Theme.of(context).colorScheme.tertiary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _NavItem(
+                    icon: Icons.calendar_today_rounded,
+                    label: 'Eventos',
+                    active: _currentIndex == 0,
+                    onTap: () => _onTap(0),
+                  ),
+                  _NavItem(
+                    icon: Icons.location_on_outlined,
+                    label: 'Mapa',
+                    active: _currentIndex == 1,
+                    onTap: () => _onTap(1),
+                  ),
+                  const SizedBox(width: 36),
+                  _NavItem(
+                    icon: Icons.chat_bubble_outline_rounded,
+                    label: 'Chat',
+                    active: _currentIndex == 2,
+                    onTap: () => _onTap(2),
+                  ),
+                  _NavItem(
+                    icon: Icons.person_outline_rounded,
+                    label: 'Perfil',
+                    active: _currentIndex == 3,
+                    onTap: () => _onTap(3),
+                  ),
+                ],
+              ),
             ),
-            _NavItem(
-              icon: Icons.location_on_outlined,
-              label: 'Mapa',
-              active: _currentIndex == 1,
-              onTap: () => _onTap(1),
+      floatingActionButton: isKeyboardOpen
+          ? null
+          : FloatingActionButton(
+              onPressed: () => context.push('/match'),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              shape: const CircleBorder(),
+              child: const Icon(Icons.favorite_outline, color: Colors.white),
             ),
-            const SizedBox(width: 36),
-            _NavItem(
-              icon: Icons.chat_bubble_outline_rounded,
-              label: 'Chat',
-              active: _currentIndex == 2,
-              onTap: () => _onTap(2),
-            ),
-            _NavItem(
-              icon: Icons.person_outline_rounded,
-              label: 'Perfil',
-              active: _currentIndex == 3,
-              onTap: () => _onTap(3),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/match'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.favorite_outline, color: Colors.white),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

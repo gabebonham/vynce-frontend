@@ -21,9 +21,8 @@ class AppTheme {
       onPrimary: AppColors.darkBlue,
 
       onSecondary: Colors.green,
-
       onSurface: AppColors.dark,
-      background: AppColors.whiteBackground,
+      inversePrimary: AppColors.whiteBackground,
       error: AppColors.red,
 
       tertiary: AppColors.darkerLight,

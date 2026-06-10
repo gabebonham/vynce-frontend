@@ -54,7 +54,7 @@ class _HostProfilePageState extends State<HostProfilePage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
         child: Column(
-          spacing: 24,
+          spacing: 32,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // cover + header foto
@@ -135,7 +135,10 @@ class _HostProfilePageState extends State<HostProfilePage> {
   Widget _counts() {
     return Column(
       children: [
-        Divider(),
+        Divider(
+          thickness: 0.5, // espessura da linha
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+        ),
         IntrinsicHeight(
           // <- define altura baseada nos filhos
           child: Padding(
@@ -152,10 +155,12 @@ class _HostProfilePageState extends State<HostProfilePage> {
                     Text('EVENTOS', style: TextStyle(fontSize: 12)),
                   ],
                 ),
-                const VerticalDivider(
+                VerticalDivider(
                   width: 32, // espaço horizontal total
                   thickness: 0.5, // espessura da linha
-                  color: Colors.grey,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.3),
                 ),
                 Column(
                   children: [
@@ -167,10 +172,12 @@ class _HostProfilePageState extends State<HostProfilePage> {
                     Text('SEGUIDORES', style: TextStyle(fontSize: 12)),
                   ],
                 ),
-                const VerticalDivider(
+                VerticalDivider(
                   width: 32, // espaço horizontal total
                   thickness: 0.5, // espessura da linha
-                  color: Colors.grey,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.3),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -181,7 +188,10 @@ class _HostProfilePageState extends State<HostProfilePage> {
           ),
         ),
 
-        Divider(),
+        Divider(
+          thickness: 0.5, // espessura da linha
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+        ),
       ],
     );
   }
@@ -232,7 +242,7 @@ class _HostProfilePageState extends State<HostProfilePage> {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
       child: Column(
-        spacing: 10,
+        spacing: 12,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -245,7 +255,7 @@ class _HostProfilePageState extends State<HostProfilePage> {
                 ),
               ),
               Row(
-                spacing: 14,
+                spacing: 18,
                 children: [
                   GestureDetector(
                     child: Container(
@@ -284,25 +294,31 @@ class _HostProfilePageState extends State<HostProfilePage> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 10,
+            spacing: 16,
             children: [
-              Text(
-                _host!.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _host!.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  Text(
+                    _host!.location,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.4),
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                _host!.location,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.4),
-                ),
-              ),
+
               Text(
                 _host!.bio ?? "",
                 style: TextStyle(

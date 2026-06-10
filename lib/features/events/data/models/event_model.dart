@@ -1,4 +1,5 @@
 import 'package:vynce_frontend/features/events/data/models/host_model.dart';
+import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
 
 class EventModel {
   final String id;
@@ -68,8 +69,9 @@ class EventModel {
       maxParticipants: json['maxParticipants'] as int,
       price: (json['price'] as num?)?.toInt(),
 
-      // event_model.dart
-      host: HostModel.fromJson(json['host'] as Map<String, dynamic>),
+      host: json['host'] != null
+          ? HostModel.fromJson(json['host'] as Map<String, dynamic>)
+          : null,
     );
   }
 

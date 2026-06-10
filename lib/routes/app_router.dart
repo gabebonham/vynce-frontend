@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:vynce_frontend/features/chat/chat_page.dart';
+import 'package:vynce_frontend/features/chats/widgets/chats_page.dart';
 import 'package:vynce_frontend/features/events/presentation/pages/event_page.dart';
 import 'package:vynce_frontend/features/events/presentation/pages/events_page.dart';
 import 'package:vynce_frontend/features/events/presentation/pages/filtered_events_page.dart';
@@ -13,27 +15,30 @@ final appRouter = GoRouter(
 
   routes: [
     GoRoute(path: '/', redirect: (_, _) => '/events'),
-
+    GoRoute(
+      path: '/chats/:id',
+      builder: (_, state) => ChatPage(id: state.pathParameters['id']!),
+    ),
     ShellRoute(
       builder: (context, state, child) => MainNavingationBar(child: child),
       routes: [
+        GoRoute(path: '/chats', builder: (_, state) => ChatsPage()),
+
         GoRoute(
-          path: '/events/:id', // vira /events/:id
+          path: '/events/:id',
           builder: (_, state) => EventPage(id: state.pathParameters['id']!),
         ),
+
         GoRoute(
-          path: '/host-profile/:id', // vira /events/:id
+          path: '/host-profile/:id',
           builder: (_, state) =>
               HostProfilePage(id: state.pathParameters['id']!),
         ),
         GoRoute(
-          path: '/profile/:id', // vira /events/:id
+          path: '/profile/:id',
           builder: (_, state) => ProfilePage(id: state.pathParameters['id']!),
         ),
-        GoRoute(
-          path: '/map', // vira /events/:id
-          builder: (_, state) => MapPage(),
-        ),
+        GoRoute(path: '/map', builder: (_, state) => MapPage()),
         ShellRoute(
           builder: (context, state, child) =>
               EventsNavigationShell(child: child),
