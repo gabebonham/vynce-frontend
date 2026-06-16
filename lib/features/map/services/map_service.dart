@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vynce_frontend/features/map/models/place_result_model.dart';
 
@@ -7,26 +9,51 @@ class MapService {
 
   MapService(this.dio);
   Future<LatLng> getCurrentLocation() async {
-    await Future.delayed(const Duration(milliseconds: 500)); // simula latência
-    return const LatLng(-30.0346, -51.2177); // Porto Alegre
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) throw Exception('GPS desativado');
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied)
+        throw Exception('Permissão negada');
+    }
+
+    final pos = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    return LatLng(pos.latitude, pos.longitude);
   }
 
   Future<List<PlaceResult>> searchPlaces(String query) async {
-    await Future.delayed(const Duration(milliseconds: 800));
-    return [
-      PlaceResult(
-        name: 'Lugar Mockado 1',
-        position: const LatLng(-30.032, -51.230),
-      ),
-      PlaceResult(
-        name: 'Lugar Mockado 2',
-        position: const LatLng(-30.028, -51.218),
-      ),
-    ];
+    final response = await dio.get(
+      'https://maps.googleapis.com/maps/api/place/textsearch/json',
+      queryParameters: {
+        'query': query,
+        'key': const String.fromEnvironment('MAPS_API_KEY'),
+        'language': 'pt-BR',
+      },
+    );
+
+    final results = response.data['results'] as List;
+
+    return results.map((place) {
+      final loc = place['geometry']['location'];
+      return PlaceResult(
+        name: place['name'],
+        position: LatLng(loc['lat'], loc['lng']),
+      );
+    }).toList();
   }
 
   Future<String> reverseGeocode(LatLng position) async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    return 'Rua Mockada, 123 - Porto Alegre';
+    final placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+
+    final place = placemarks.first;
+    return '${place.street}, ${place.subLocality} - ${place.locality}';
   }
 }

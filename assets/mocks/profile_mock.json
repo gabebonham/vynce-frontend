@@ -3,6 +3,7 @@
   "name": "Aurora",
   "email": "aurora@example.com",
   "avatarUrl": "https://picsum.photos/500/300?10",
+  "bannerUrl": "https://picsum.photos/500/300?11",
   "location": "Balneário Camboriú",
   "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
   "favoriteEvents": [
