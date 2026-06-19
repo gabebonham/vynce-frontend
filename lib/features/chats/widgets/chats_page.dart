@@ -134,7 +134,7 @@ class _ChatsPageState extends State<ChatsPage> {
         .map(
           (m) => GestureDetector(
             onTap: () {
-              context.push("chats/" + (m.chatId as String));
+              context.push("chat/" + (m.chatId as String));
             },
             child: Column(
               spacing: 6,
@@ -194,7 +194,7 @@ class _ChatsPageState extends State<ChatsPage> {
       var isMyMessage = m.lastMessageUserId as String == m.userId;
       return ListTile(
         onTap: () {
-          context.push("chats/" + (m.chatId as String));
+          context.push("chat/" + (m.chatId as String));
         },
         leading: Stack(
           children: [

@@ -14,17 +14,85 @@ class FavoriteEventCard extends StatefulWidget {
 
   final EventModel event;
   final ProfileModel? profile;
-  final Future<bool> Function(String eventId) onFavTap;
+  final Function(String eventId) onFavTap;
 
   @override
   State<FavoriteEventCard> createState() => _FavoriteEventCardState();
 }
 
 class _FavoriteEventCardState extends State<FavoriteEventCard> {
-  bool isFavorite = false;
+  bool _isFavorited = false;
   bool isEventFavorited() {
     final profile = widget.profile;
     return profile?.favoriteEvents.any((e) => e == widget.event.id) ?? false;
+  }
+
+  @override
+  void didUpdateWidget(FavoriteEventCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.profile != widget.profile) {
+      _isFavorited = isEventFavorited();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorited = isEventFavorited();
+  }
+
+  Future<void> _toggleFavorite() async {
+    widget.onFavTap(widget.event.id);
+    setState(() => _isFavorited = !_isFavorited);
+
+    final messenger = ScaffoldMessenger.of(context);
+    messenger
+        .removeCurrentSnackBar(); // corta o anterior na hora, sem esperar a fila
+
+    messenger.showSnackBar(
+      SnackBar(
+        content: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          transitionBuilder: (child, animation) => SlideTransition(
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0, 0.4),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+                ),
+            child: FadeTransition(opacity: animation, child: child),
+          ),
+          child: Row(
+            key: ValueKey(
+              _isFavorited,
+            ), // força o AnimatedSwitcher a animar na troca
+            children: [
+              Icon(
+                _isFavorited ? Icons.favorite : Icons.favorite_border,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                _isFavorited ? 'Evento favoritado!' : 'Removido dos favoritos',
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Color(int.parse(widget.event.color)),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(8),
+        duration: const Duration(
+          milliseconds: 1400,
+        ), // mais curto, responde mais rápido a cliques seguidos
+        animation: CurvedAnimation(
+          parent: const AlwaysStoppedAnimation(1),
+          curve: Curves.easeInCirc,
+        ),
+      ),
+    );
   }
 
   @override
@@ -32,7 +100,6 @@ class _FavoriteEventCardState extends State<FavoriteEventCard> {
     String locTime = DateFormat(
       'dd MMM • HH:mm',
     ).format(widget.event.date.toLocal());
-    isFavorite = isEventFavorited();
     return SizedBox(
       width: 220,
       height: 228,
@@ -177,11 +244,11 @@ class _FavoriteEventCardState extends State<FavoriteEventCard> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: _toggleFavorite,
                                   padding: EdgeInsets.zero,
                                   constraints: const BoxConstraints(),
                                   icon: Icon(
-                                    isFavorite
+                                    _isFavorited
                                         ? Icons.favorite
                                         : Icons.favorite_outline,
                                     color: Theme.of(

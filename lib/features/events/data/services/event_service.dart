@@ -63,7 +63,12 @@ class EventsService {
     if (event.participantsCount < filter.minParticipants) {
       return false;
     }
-    if (!profile.favoriteEvents.contains(event.id)) {
+    if (filter.title != null &&
+        filter.title!.isNotEmpty &&
+        !event.title.toLowerCase().contains(filter.title!.toLowerCase())) {
+      return false;
+    }
+    if (filter.onlyFavorites && !profile.favoriteEvents.contains(event.id)) {
       return false;
     }
     if (!_matchesDateRange(event.date, filter.dateRange)) return false;

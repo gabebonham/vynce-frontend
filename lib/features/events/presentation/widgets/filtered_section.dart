@@ -38,6 +38,24 @@ class _FilteredSectionState extends State<FilteredSection> {
     });
   }
 
+  void _onSearchChanged(String value) {
+    final uri = GoRouterState.of(context).uri;
+    final newParams = Map<String, String>.from(uri.queryParameters);
+    if (value.isEmpty) {
+      newParams.remove('title'); // era 'name'
+    } else {
+      newParams['title'] = value; // era 'name'
+    }
+    context.go(uri.replace(queryParameters: newParams).toString());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    currentFilter = getFilters(context);
+    loadEventsFiltered();
+  }
+
   EventFilter getFilters(BuildContext context) {
     final category = GoRouterState.of(context).uri.queryParameters['category'];
     final minParticipants = int.tryParse(
@@ -52,8 +70,12 @@ class _FilteredSectionState extends State<FilteredSection> {
     final onlyFavorites = bool.tryParse(
       GoRouterState.of(context).uri.queryParameters['onlyFavorites'] ?? 'false',
     );
+
+    final title = GoRouterState.of(context).uri.queryParameters['title'];
+
     return EventFilter(
       category: category,
+      title: title,
       minParticipants: minParticipants ?? 0,
       maxDistanceKm: maxDistanceKm ?? 100,
       dateRange: dateRange,

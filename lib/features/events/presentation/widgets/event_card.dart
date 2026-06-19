@@ -6,8 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 
 class EventCard extends StatefulWidget {
-  const EventCard({super.key, required this.event, required this.profile});
-
+  const EventCard({
+    super.key,
+    required this.event,
+    required this.profile,
+    required this.onFavTap,
+  });
+  final Function onFavTap;
   final EventModel event;
   final ProfileModel? profile;
 
@@ -16,7 +21,7 @@ class EventCard extends StatefulWidget {
 }
 
 class _EventCardState extends State<EventCard> {
-  bool isFavorite = false;
+  bool _isFavorited = false;
   final EventModel event;
   _EventCardState(this.event);
   bool isEventFavorited() {
@@ -25,11 +30,78 @@ class _EventCardState extends State<EventCard> {
   }
 
   @override
+  void didUpdateWidget(EventCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.profile != widget.profile) {
+      _isFavorited = isEventFavorited();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorited = isEventFavorited();
+  }
+
+  Future<void> _toggleFavorite() async {
+    widget.onFavTap(widget.event.id);
+    setState(() => _isFavorited = !_isFavorited);
+
+    final messenger = ScaffoldMessenger.of(context);
+    messenger
+        .removeCurrentSnackBar(); // corta o anterior na hora, sem esperar a fila
+
+    messenger.showSnackBar(
+      SnackBar(
+        content: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          transitionBuilder: (child, animation) => SlideTransition(
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0, 0.4),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+                ),
+            child: FadeTransition(opacity: animation, child: child),
+          ),
+          child: Row(
+            key: ValueKey(
+              _isFavorited,
+            ), // força o AnimatedSwitcher a animar na troca
+            children: [
+              Icon(
+                _isFavorited ? Icons.favorite : Icons.favorite_border,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                _isFavorited ? 'Evento favoritado!' : 'Removido dos favoritos',
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Color(int.parse(widget.event.color)),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(8),
+        duration: const Duration(
+          milliseconds: 1400,
+        ), // mais curto, responde mais rápido a cliques seguidos
+        animation: CurvedAnimation(
+          parent: const AlwaysStoppedAnimation(1),
+          curve: Curves.easeInCirc,
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final formatted = DateFormat(
       'dd/MM/yyyy • HH:mm',
     ).format(event.date.toLocal());
-    bool isFav = isEventFavorited();
     return SizedBox(
       width: 220,
       height: 308,
@@ -123,13 +195,12 @@ class _EventCardState extends State<EventCard> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () =>
-                                      setState(() => isFavorite = !isFavorite),
+                                  onPressed: _toggleFavorite,
                                   icon: Icon(
-                                    isFav
+                                    _isFavorited
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                    color: isFav
+                                    color: _isFavorited
                                         ? Color(int.parse(widget.event.color))
                                         : Colors.white,
                                     size: 20,

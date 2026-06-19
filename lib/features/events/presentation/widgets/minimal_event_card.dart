@@ -124,16 +124,53 @@ class _CardDescriptionState extends State<CardDescription> {
   Future<void> _toggleFavorite() async {
     widget.onFavTap(widget.event.id);
     setState(() => _isFavorited = !_isFavorited);
-    ScaffoldMessenger.of(context).showSnackBar(
+
+    final messenger = ScaffoldMessenger.of(context);
+    messenger
+        .removeCurrentSnackBar(); // corta o anterior na hora, sem esperar a fila
+
+    messenger.showSnackBar(
       SnackBar(
-        content: Text(
-          _isFavorited ? 'Evento favoritado!' : 'Removido dos favoritos',
+        content: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          transitionBuilder: (child, animation) => SlideTransition(
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0, 0.4),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+                ),
+            child: FadeTransition(opacity: animation, child: child),
+          ),
+          child: Row(
+            key: ValueKey(
+              _isFavorited,
+            ), // força o AnimatedSwitcher a animar na troca
+            children: [
+              Icon(
+                _isFavorited ? Icons.favorite : Icons.favorite_border,
+                color: Colors.white,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                _isFavorited ? 'Evento favoritado!' : 'Removido dos favoritos',
+              ),
+            ],
+          ),
         ),
         backgroundColor: Color(int.parse(widget.event.color)),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(8),
-        duration: const Duration(seconds: 2),
+        duration: const Duration(
+          milliseconds: 1400,
+        ), // mais curto, responde mais rápido a cliques seguidos
+        animation: CurvedAnimation(
+          parent: const AlwaysStoppedAnimation(1),
+          curve: Curves.easeInCirc,
+        ),
       ),
     );
   }

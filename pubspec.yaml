@@ -1,5 +1,5 @@
 name: vynce_frontend
-description: "A new Flutter project."
+description: "Vynce frontend"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -45,6 +45,7 @@ dependencies:
   permission_handler: ^12.0.3
   emoji_picker_flutter: ^4.4.0
   geocoding: ^4.0.0
+  image_picker: ^1.2.2
 
 dev_dependencies:
   flutter_test:

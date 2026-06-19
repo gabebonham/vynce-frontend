@@ -6,6 +6,8 @@ import 'package:vynce_frontend/core/injector.dart';
 import 'package:vynce_frontend/features/events/data/models/chat_model.dart';
 import 'package:vynce_frontend/features/events/data/models/message_model.dart';
 import 'package:vynce_frontend/features/events/data/services/chats_service.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vynce_frontend/navigation/extensions/safe_navigation.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.id});
@@ -56,7 +58,7 @@ class _ChatPageState extends State<ChatPage> {
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       body: Column(
         children: [
-          _eventCardSection(),
+          _eventCardSection(context),
           Expanded(child: _messagesSection()),
           _messageInput(),
           if (_showEmojiPicker)
@@ -161,66 +163,69 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget _eventCardSection() {
+  Widget _eventCardSection(BuildContext context) {
     final event = chat!.event;
     final eventColor = event?.color != null
         ? Color(int.parse(event!.color))
         : Theme.of(context).colorScheme.primary;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: eventColor.withOpacity(0.3), width: 1),
-          color: eventColor.withOpacity(0.05),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: event?.imageUrl != null
-                  ? Image.network(
-                      event!.imageUrl,
-                      width: 48,
-                      height: 48,
-                      fit: BoxFit.cover,
-                    )
-                  : Container(width: 48, height: 48, color: eventColor),
-            ),
-            SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    event?.title ?? 'Evento',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 2),
-                  Text(
-                    event != null ? _getLocTime() : '',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.secondary.withOpacity(0.5),
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+    return InkWell(
+      onTap: () => context.push('/events/${chat!.event!.id}'),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: eventColor.withOpacity(0.3), width: 1),
+            color: eventColor.withOpacity(0.05),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: event?.imageUrl != null
+                    ? Image.network(
+                        event!.imageUrl,
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(width: 48, height: 48, color: eventColor),
               ),
-            ),
-            Icon(Icons.chevron_right, color: eventColor),
-          ],
+              SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      event?.title ?? 'Evento',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      event != null ? _getLocTime() : '',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.secondary.withOpacity(0.5),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right, color: eventColor),
+            ],
+          ),
         ),
       ),
     );

@@ -12,11 +12,12 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       body: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsetsGeometry.fromLTRB(20, 12, 18, 16),
+              padding: EdgeInsetsGeometry.fromLTRB(18, 12, 18, 0),
               child: EventsArea(),
             ),
           ),

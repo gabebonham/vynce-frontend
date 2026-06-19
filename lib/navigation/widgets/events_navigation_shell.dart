@@ -33,11 +33,11 @@ class _EventsNavigationShellState extends State<EventsNavigationShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(200),
+        preferredSize: const Size.fromHeight(212),
         child: SafeArea(
           child: Container(
-            color: Theme.of(context).colorScheme.surface,
-            padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+            color: Theme.of(context).colorScheme.inversePrimary,
+            padding: const EdgeInsets.fromLTRB(18, 24, 18, 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -77,19 +77,8 @@ class _EventsNavigationShellState extends State<EventsNavigationShell> {
                     Stack(
                       children: [
                         getCircularAvatar(),
+
                         // badge de notificação
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFD4537E),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],

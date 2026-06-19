@@ -1,12 +1,12 @@
 class EventFilter {
-  late String? category;
-  late String? title;
-  late int minParticipants;
-  late double maxDistanceKm;
-  late String? dateRange;
-  late bool onlyFavorites;
+  final String? category;
+  final String? title;
+  final int minParticipants;
+  final double maxDistanceKm;
+  final String? dateRange;
+  final bool onlyFavorites;
 
-  EventFilter({
+  const EventFilter({
     this.category,
     this.title,
     this.minParticipants = 0,

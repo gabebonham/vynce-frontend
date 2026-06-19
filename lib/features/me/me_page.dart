@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:vynce_frontend/core/injector.dart';
 import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
 import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
@@ -18,6 +22,9 @@ class _MePageState extends State<MePage> {
   ProfileModel? _profile;
   String? _location;
   bool _loadingLocation = false;
+  File? _pickedBannerImage;
+  File? _pickedAvatarImage;
+  final ImagePicker _picker = ImagePicker();
   final List<Map<String, dynamic>> _selectedInterests = [
     {'label': 'Música', 'emoji': '🎵'},
     {'label': 'Festa', 'emoji': '🎉'},
@@ -56,6 +63,21 @@ class _MePageState extends State<MePage> {
     );
   }
 
+  Future<void> _pickImage({required bool isBanner}) async {
+    final picked = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+    if (picked == null) return;
+    setState(() {
+      if (isBanner) {
+        _pickedBannerImage = File(picked.path);
+      } else {
+        _pickedAvatarImage = File(picked.path);
+      }
+    });
+  }
+
   PreferredSizeWidget _appBar() {
     return AppBar(
       toolbarHeight: 70,
@@ -72,14 +94,34 @@ class _MePageState extends State<MePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              spacing: 8,
               children: [
-                GestureDetector(child: Icon(Icons.arrow_back)),
-                Text('Meu Perfil'),
+                GestureDetector(
+                  onTap: () {
+                    if (context.canPop()) {
+                      context.pop();
+                    } else {
+                      context.go('/');
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(48),
+                    ),
+                    child: Icon(Icons.arrow_back),
+                  ),
+                ),
+                Text(
+                  'Meu Perfil',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
               ],
             ),
 
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
@@ -87,7 +129,10 @@ class _MePageState extends State<MePage> {
                   width: 1,
                 ),
               ),
-              child: Text('Salvar', style: TextStyle(fontSize: 18)),
+              child: Text(
+                'Salvar',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
             ),
           ],
         ),
@@ -106,9 +151,13 @@ class _MePageState extends State<MePage> {
             width: double.infinity,
             height: 190,
             decoration: BoxDecoration(
-              image:
-                  (_profile!.bannerUrl != null &&
-                      _profile!.bannerUrl!.isNotEmpty)
+              image: _pickedBannerImage != null
+                  ? DecorationImage(
+                      image: FileImage(_pickedBannerImage!),
+                      fit: BoxFit.cover,
+                    )
+                  : (_profile!.bannerUrl != null &&
+                        _profile!.bannerUrl!.isNotEmpty)
                   ? DecorationImage(
                       image: NetworkImage(_profile!.bannerUrl!),
                       fit: BoxFit.cover,
@@ -146,9 +195,7 @@ class _MePageState extends State<MePage> {
             bottom: 44, // acima do avatar
             right: 12,
             child: GestureDetector(
-              onTap: () {
-                /* editar capa */
-              },
+              onTap: () => _pickImage(isBanner: true),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
@@ -182,9 +229,7 @@ class _MePageState extends State<MePage> {
             bottom: 0,
             left: 16,
             child: GestureDetector(
-              onTap: () {
-                /* alterar foto */
-              },
+              onTap: () => _pickImage(isBanner: false),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -193,8 +238,8 @@ class _MePageState extends State<MePage> {
                     children: [
                       // Avatar
                       Container(
-                        width: 72,
-                        height: 72,
+                        width: 102,
+                        height: 102,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
@@ -203,25 +248,21 @@ class _MePageState extends State<MePage> {
                           ),
                         ),
                         child: ClipOval(
-                          child:
-                              (_profile!.avatarUrl != null &&
-                                  _profile!.avatarUrl!.isNotEmpty)
+                          child: _pickedAvatarImage != null
+                              ? Image.file(
+                                  _pickedAvatarImage!,
+                                  fit: BoxFit.cover,
+                                  width: 72,
+                                  height: 72,
+                                )
+                              : (_profile!.avatarUrl != null &&
+                                    _profile!.avatarUrl!.isNotEmpty)
                               ? Image.network(
                                   _profile!.avatarUrl!,
                                   fit: BoxFit.cover,
                                 )
                               : Container(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  child: Center(
-                                    child: Text(
-                                      _getInitials(), // ex: "AU"
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
+                                  /* fallback com iniciais, igual já está */
                                 ),
                         ),
                       ),
@@ -285,135 +326,143 @@ class _MePageState extends State<MePage> {
   }
 
   Widget _accountCard() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8,
-      children: [
-        Text(
-          'CONTA',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.35),
-          ),
-        ),
-
-        // Sair da conta
-        GestureDetector(
-          onTap: () {
-            // logout
-          },
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface.withOpacity(0.35),
-              ),
+    return Padding(
+      padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 8,
+        children: [
+          Text(
+            'CONTA',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.35),
+              fontSize: 12,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.logout,
-                  size: 18,
+          ),
+
+          // Sair da conta
+          GestureDetector(
+            onTap: () {
+              // logout
+            },
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.6),
+                  ).colorScheme.onSurface.withOpacity(0.35),
                 ),
-                SizedBox(width: 8),
-                Text(
-                  'Sair da conta',
-                  style: TextStyle(
-                    fontSize: 15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.logout,
+                    size: 18,
                     color: Theme.of(
                       context,
                     ).colorScheme.onSurface.withOpacity(0.6),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        // Excluir conta
-        GestureDetector(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                title: Text(
-                  'Excluir conta',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                content: Text(
-                  'Tem certeza que deseja excluir sua conta? Essa ação é irreversível e todos os seus dados serão perdidos.',
-                  style: TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurface.withOpacity(0.6),
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Cancelar',
-                      style: TextStyle(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withOpacity(0.6),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      // chamar delete account
-                    },
-                    child: Text(
-                      'Excluir',
-                      style: TextStyle(
-                        color: Color(0xFF8B1A1A),
-                        fontWeight: FontWeight.bold,
-                      ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Sair da conta',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                 ],
               ),
-            );
-          },
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 16),
-            decoration: BoxDecoration(
-              color: Color(0xFFFDF0F0),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Color(0xFFE8C0C0)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.delete_outline, size: 18, color: Color(0xFF8B1A1A)),
-                SizedBox(width: 8),
-                Text(
-                  'Excluir conta',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF8B1A1A),
-                  ),
-                ),
-              ],
             ),
           ),
-        ),
-      ],
+
+          // Excluir conta
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  title: Text(
+                    'Excluir conta',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  content: Text(
+                    'Tem certeza que deseja excluir sua conta? Essa ação é irreversível e todos os seus dados serão perdidos.',
+                    style: TextStyle(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.6),
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'Cancelar',
+                        style: TextStyle(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.6),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        // chamar delete account
+                      },
+                      child: Text(
+                        'Excluir',
+                        style: TextStyle(
+                          color: Color(0xFF8B1A1A),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: Color(0xFFFDF0F0),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Color(0xFFE8C0C0)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.delete_outline,
+                    size: 18,
+                    color: Color(0xFF8B1A1A),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Excluir conta',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF8B1A1A),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -426,6 +475,7 @@ class _MePageState extends State<MePage> {
           'DADOS BÁSICOS',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.35),
+            fontSize: 12,
           ),
         ),
         Container(
@@ -676,6 +726,7 @@ class _MePageState extends State<MePage> {
           'INTERESSES',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.35),
+            fontSize: 12,
           ),
         ),
         Container(
@@ -964,6 +1015,7 @@ class _MePageState extends State<MePage> {
           'CONTATO',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.35),
+            fontSize: 12,
           ),
         ),
         Container(

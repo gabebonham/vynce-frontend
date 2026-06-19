@@ -123,7 +123,13 @@ class _HostProfilePageState extends State<HostProfilePage> {
             child: Row(
               spacing: 12,
               children: _host!.events
-                  .map((event) => EventCard(event: event, profile: _profile))
+                  .map(
+                    (event) => EventCard(
+                      event: event,
+                      profile: _profile,
+                      onFavTap: (String eventId) {},
+                    ),
+                  )
                   .toList(),
             ),
           ),

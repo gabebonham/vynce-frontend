@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class MainNavingationBar extends StatefulWidget {
-  const MainNavingationBar({super.key, required this.child});
-  final Widget child;
-
-  @override
-  State<MainNavingationBar> createState() => _MainNavingationBarState();
-}
-
-class _MainNavingationBarState extends State<MainNavingationBar> {
-  int _currentIndex = 0;
-
-  final _tabs = ['/events', '/map', '/chats', '/me'];
+class MainNavingationBar extends StatelessWidget {
+  const MainNavingationBar({super.key, required this.navigationShell});
+  final StatefulNavigationShell navigationShell;
 
   void _onTap(int index) {
-    setState(() => _currentIndex = index);
-    context.go(_tabs[index]);
+    navigationShell.goBranch(
+      index,
+      // true = volta pra raiz da aba se já estiver nela; false = mantém pilha
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
@@ -24,7 +18,7 @@ class _MainNavingationBarState extends State<MainNavingationBar> {
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: widget.child,
+      body: navigationShell,
       bottomNavigationBar: isKeyboardOpen
           ? null
           : BottomAppBar(
@@ -38,26 +32,26 @@ class _MainNavingationBarState extends State<MainNavingationBar> {
                   _NavItem(
                     icon: Icons.calendar_today_rounded,
                     label: 'Eventos',
-                    active: _currentIndex == 0,
+                    active: navigationShell.currentIndex == 0,
                     onTap: () => _onTap(0),
                   ),
                   _NavItem(
                     icon: Icons.location_on_outlined,
                     label: 'Mapa',
-                    active: _currentIndex == 1,
+                    active: navigationShell.currentIndex == 1,
                     onTap: () => _onTap(1),
                   ),
                   const SizedBox(width: 36),
                   _NavItem(
                     icon: Icons.chat_bubble_outline_rounded,
                     label: 'Chat',
-                    active: _currentIndex == 2,
+                    active: navigationShell.currentIndex == 2,
                     onTap: () => _onTap(2),
                   ),
                   _NavItem(
                     icon: Icons.person_outline_rounded,
                     label: 'Perfil',
-                    active: _currentIndex == 3,
+                    active: navigationShell.currentIndex == 3,
                     onTap: () => _onTap(3),
                   ),
                 ],

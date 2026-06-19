@@ -8,7 +8,6 @@ import 'package:vynce_frontend/features/events/data/models/event_model.dart';
 import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
 import 'package:vynce_frontend/features/events/data/services/event_service.dart';
 import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/minimal_event_card.dart';
 import 'package:vynce_frontend/features/map/services/map_service.dart';
 import 'package:vynce_frontend/features/map/widgets/filter_sheet.dart';
 import 'package:vynce_frontend/features/map/widgets/map_event_card.dart';
@@ -165,7 +164,7 @@ class _MapPageState extends State<MapPage> {
                           child: MapEventCard(
                             event: event,
                             profile: _profile!,
-                            onFavTap: (value) => Future.delayed(Duration.zero),
+                            onFavTap: (value) {},
                           ),
                         ),
                       );
@@ -222,20 +221,23 @@ class _MapPageState extends State<MapPage> {
                 onChanged: (value) {
                   setState(() {
                     _searchQuery = value;
-                    _events =
-                        []; // limpa imediatamente enquanto o debounce não dispara
+                    _events = [];
                   });
                   _debounce?.cancel();
                   _debounce = Timer(
                     const Duration(milliseconds: 400),
                     () async {
+                      final newFilter = _filter.copyWith(
+                        title: value.isEmpty ? null : value,
+                      );
                       final events = await eventsService.getNearbyEvents(
                         _currentPosition!,
-                        filter: _filter.copyWith(
-                          title: value.isEmpty ? null : value,
-                        ),
+                        filter: newFilter,
                       );
-                      setState(() => _events = events);
+                      setState(() {
+                        _filter = newFilter; // <- faltava isso
+                        _events = events;
+                      });
                     },
                   );
                 },
@@ -247,14 +249,18 @@ class _MapPageState extends State<MapPage> {
                           icon: const Icon(Icons.close, size: 18),
                           onPressed: () {
                             _searchController.clear();
+                            final newFilter = _filter.copyWith(title: null);
                             setState(() => _searchQuery = '');
                             eventsService
                                 .getNearbyEvents(
                                   _currentPosition!,
-                                  filter: _filter.copyWith(title: null),
+                                  filter: newFilter,
                                 )
                                 .then(
-                                  (events) => setState(() => _events = events),
+                                  (events) => setState(() {
+                                    _filter = newFilter;
+                                    _events = events;
+                                  }),
                                 );
                           },
                         )

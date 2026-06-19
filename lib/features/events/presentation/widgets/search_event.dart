@@ -11,12 +11,31 @@ class SearchEvent extends StatefulWidget {
 }
 
 class _SearchEventState extends State<SearchEvent> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final TextEditingController _controller = TextEditingController();
 
   EventFilter? currentFilter;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onSearchSubmitted(String value) {
+    final uri = GoRouterState.of(context).uri;
+    final newParams = Map<String, String>.from(uri.queryParameters);
+    if (value.isEmpty) {
+      newParams.remove('title');
+    } else {
+      newParams['title'] = value;
+    }
+    context.go(
+      uri
+          .replace(path: '/events-filtered', queryParameters: newParams)
+          .toString(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,9 +50,12 @@ class _SearchEventState extends State<SearchEvent> {
         children: [
           const Icon(Icons.search, size: 18, color: Colors.black38),
           const SizedBox(width: 8),
-          const Expanded(
+          Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              controller: _controller,
+              textInputAction: TextInputAction.search,
+              onSubmitted: _onSearchSubmitted,
+              decoration: const InputDecoration(
                 hintText: 'Buscar eventos...',
                 hintStyle: TextStyle(fontSize: 14, color: Colors.black38),
                 border: InputBorder.none,
@@ -51,9 +73,7 @@ class _SearchEventState extends State<SearchEvent> {
                 backgroundColor: Colors.transparent,
                 builder: (_) => Padding(
                   padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(
-                      context,
-                    ).viewInsets.bottom, // <- sobe com teclado
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
                   ),
                   child: EventFilterModal(
                     initialFilter: currentFilter,
@@ -99,6 +119,10 @@ class _SearchEventState extends State<SearchEvent> {
       finalFilter = finalFilter.copyWith(category: currentFilter?.category);
     }
 
+    final existingTitle = GoRouterState.of(
+      context,
+    ).uri.queryParameters['title'];
+
     context.push(
       Uri(
         path: '/events-filtered',
@@ -109,6 +133,8 @@ class _SearchEventState extends State<SearchEvent> {
           if (finalFilter.dateRange != null)
             'dateRange': finalFilter.dateRange!,
           'onlyFavorites': finalFilter.onlyFavorites.toString(),
+          if (existingTitle != null && existingTitle.isNotEmpty)
+            'title': existingTitle,
         },
       ).toString(),
     );

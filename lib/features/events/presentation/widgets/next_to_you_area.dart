@@ -7,52 +7,28 @@ import 'package:vynce_frontend/features/events/data/services/profile_service.dar
 import 'package:vynce_frontend/features/events/presentation/widgets/minimal_event_card.dart';
 
 class NextToYouArea extends StatefulWidget {
-  const NextToYouArea({super.key});
-
+  const NextToYouArea({
+    super.key,
+    required this.profile,
+    required this.events,
+    required this.onFavTap,
+  });
+  final ProfileModel profile;
+  final List<EventModel> events;
+  final Function(String) onFavTap;
   @override
   State<NextToYouArea> createState() => _NextToYouAreaState();
 }
 
 class _NextToYouAreaState extends State<NextToYouArea> {
-  final EventsService _eventsService = getIt<EventsService>();
-  final ProfileService _profileService = getIt<ProfileService>();
-
-  List<EventModel> events = [];
-  ProfileModel? profile;
   @override
   void initState() {
     super.initState();
-    loadEvents();
-    loadProfile();
-  }
-
-  Future<void> loadProfile() async {
-    final result = await _profileService.getProfile('1');
-
-    setState(() {
-      profile = result;
-    });
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  Future<void> loadEvents() async {
-    final result = await _eventsService.getEvents();
-
-    setState(() {
-      events = result;
-    });
-  }
-
-  Future<bool> onFavTap(String eventId) async {
-    if (profile == null) return false;
-
-    final result = await _eventsService.favoriteEvent(eventId);
-
-    return result;
   }
 
   @override
@@ -71,12 +47,12 @@ class _NextToYouAreaState extends State<NextToYouArea> {
         SizedBox(height: 12),
         Column(
           spacing: 14,
-          children: events
+          children: widget.events
               .map(
                 (e) => MinimalEventCard(
                   event: e,
-                  profile: profile,
-                  onFavTap: onFavTap,
+                  profile: widget.profile,
+                  onFavTap: widget.onFavTap,
                 ),
               )
               .toList(),
