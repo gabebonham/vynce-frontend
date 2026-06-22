@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vynce_frontend/core/utils/distance_utils.dart';
 import 'package:vynce_frontend/features/events/data/models/event_filter.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
+import 'package:vynce_frontend/features/events/data/models/ongoing_event_model.dart';
 import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
 
 class EventsService {
@@ -37,6 +39,30 @@ class EventsService {
     final events = EventModel.fromJsonList(data);
 
     return events.firstWhere((event) => event.id == id);
+  }
+
+  Future<OngoingEventModel> getOngoingEvent(String id) async {
+    final String response = await rootBundle.loadString(
+      'assets/mocks/ongoing_events_mocks.json',
+    );
+
+    final List<dynamic> data = jsonDecode(response);
+    final events = OngoingEventModel.fromJsonList(data);
+
+    debugPrint('buscando id: "$id"');
+    debugPrint('ids disponíveis: ${events.map((e) => e.id).toList()}');
+
+    final event = events.firstWhere((event) => event.id == id);
+
+    // novo
+    debugPrint(
+      'checkedInParticipants raw: ${data.firstWhere((e) => e['id'] == id)['checkedInParticipants']}',
+    );
+    debugPrint(
+      'checkedInParticipants parsed: ${event.checkedInParticipants.length}',
+    );
+
+    return event;
   }
 
   Future<List<EventModel>> getEventsFiltered(EventFilter filter) async {

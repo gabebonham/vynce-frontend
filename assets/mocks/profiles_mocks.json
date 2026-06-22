@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1",
+    "name": "Aurora",
+    "email": "aurora@example.com",
+    "avatarUrl": "https://picsum.photos/seed/aurora/500/700",
+    "bannerUrl": "https://picsum.photos/seed/aurora-banner/500/300",
+    "location": "Balneário Camboriú",
+    "bio": "Organizadora de eventos eletrônicos pelo Sul do Brasil. Viciada em pôr do sol e no próximo rolê.",
+    "favoriteEvents": ["1", "3", "5"],
+    "pendingMatches": 3,
+    "createdAt": "2026-08-02T00:00:00.000Z",
+    "interests": ["Música", "Filmes", "Artes"],
+    "age": 34
+  },
+  {
+    "id": "2",
+    "name": "Laura",
+    "email": "laura@example.com",
+    "avatarUrl": "https://picsum.photos/seed/laura/500/700",
+    "bannerUrl": "https://picsum.photos/seed/laura-banner/500/300",
+    "location": "Porto Alegre",
+    "bio": "Apaixonada por música eletrônica, festivais e bons drinks. Sempre em busca do próximo line-up incrível.",
+    "favoriteEvents": ["2", "4"],
+    "pendingMatches": 1,
+    "createdAt": "2026-06-15T00:00:00.000Z",
+    "interests": ["Música", "Festa", "Open air"],
+    "age": 26
+  },
+  {
+    "id": "3",
+    "name": "Bianca",
+    "email": "bianca@example.com",
+    "avatarUrl": "https://picsum.photos/seed/bianca/500/700",
+    "bannerUrl": "https://picsum.photos/seed/bianca-banner/500/300",
+    "location": "Florianópolis",
+    "bio": "DJ nas horas vagas, arquiteta no resto do tempo. Amo um festival bem produzido.",
+    "favoriteEvents": ["1", "2"],
+    "pendingMatches": 5,
+    "createdAt": "2026-05-10T00:00:00.000Z",
+    "interests": ["DJ", "Arquitetura", "Viagem"],
+    "age": 29
+  },
+  {
+    "id": "4",
+    "name": "Fernanda",
+    "email": "fernanda@example.com",
+    "avatarUrl": "https://picsum.photos/seed/fernanda/500/700",
+    "bannerUrl": "https://picsum.photos/seed/fernanda-banner/500/300",
+    "location": "Curitiba",
+    "bio": "Fotógrafa de shows e festivais. Se tiver boa luz e boa música, tô dentro.",
+    "favoriteEvents": ["3", "5"],
+    "pendingMatches": 2,
+    "createdAt": "2026-03-22T00:00:00.000Z",
+    "interests": ["Fotografia", "Shows", "Arte"],
+    "age": 31
+  },
+  {
+    "id": "5",
+    "name": "Camila",
+    "email": "camila@example.com",
+    "avatarUrl": "https://picsum.photos/seed/camila/500/700",
+    "bannerUrl": "https://picsum.photos/seed/camila-banner/500/300",
+    "location": "São Paulo",
+    "bio": "Produtora cultural apaixonada por techno e experiências imersivas. Vivo entre festivais.",
+    "favoriteEvents": ["1", "4", "5"],
+    "pendingMatches": 7,
+    "createdAt": "2026-01-18T00:00:00.000Z",
+    "interests": ["Techno", "Produção", "Imersão"],
+    "age": 28
+  }
+]

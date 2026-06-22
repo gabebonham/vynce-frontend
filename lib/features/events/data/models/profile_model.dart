@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:vynce_frontend/features/events/data/models/event_model.dart';
 
 class ProfileModel {
@@ -15,6 +16,8 @@ class ProfileModel {
   final List<EventModel> events; // <- novo
   final double? rating;
   final DateTime createdAt;
+  final int age;
+  final List<String> interests;
 
   ProfileModel({
     required this.id,
@@ -31,10 +34,20 @@ class ProfileModel {
     this.events = const [],
     this.rating,
     required this.createdAt,
+    required this.age,
+    required this.interests,
   });
 
   static List<ProfileModel> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((json) => ProfileModel.fromJson(json)).toList();
+    return jsonList.map((json) {
+      try {
+        return ProfileModel.fromJson(json);
+      } catch (e) {
+        debugPrint('ERRO no ProfileModel.fromJson: $e');
+        debugPrint('json problemático: $json');
+        rethrow;
+      }
+    }).toList();
   }
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -57,6 +70,8 @@ class ProfileModel {
               .toList() ??
           [],
       createdAt: DateTime.parse(json['createdAt']),
+      age: (json['age'] as int?) ?? 0,
+      interests: List<String>.from(json['interests'] ?? []),
     );
   }
 
@@ -76,6 +91,8 @@ class ProfileModel {
       'favoriteEvents': favoriteEvents,
       'events': events.map((e) => e.toJson()).toList(),
       'createdAt': createdAt.toIso8601String(),
+      'age': age,
+      'interests': interests,
     };
   }
 }

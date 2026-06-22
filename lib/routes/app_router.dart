@@ -7,6 +7,7 @@ import 'package:vynce_frontend/features/events/presentation/pages/events_page.da
 import 'package:vynce_frontend/features/events/presentation/pages/filtered_events_page.dart';
 import 'package:vynce_frontend/features/host-profile/host_profile_page.dart';
 import 'package:vynce_frontend/features/map/map_page.dart';
+import 'package:vynce_frontend/features/match/match_page.dart';
 import 'package:vynce_frontend/features/me/me_page.dart';
 import 'package:vynce_frontend/features/profile/profile_page.dart';
 import 'package:vynce_frontend/navigation/widgets/events_navigation_shell.dart';
@@ -41,7 +42,11 @@ final appRouter = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (_, state) => ProfilePage(id: state.pathParameters['id']!),
     ),
-
+    GoRoute(
+      path: '/match/:eventId',
+      builder: (context, state) =>
+          MatchPage(eventId: state.pathParameters['eventId']!),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           MainNavingationBar(navigationShell: navigationShell),

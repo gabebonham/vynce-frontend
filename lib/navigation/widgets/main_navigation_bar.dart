@@ -60,7 +60,7 @@ class MainNavingationBar extends StatelessWidget {
       floatingActionButton: isKeyboardOpen
           ? null
           : FloatingActionButton(
-              onPressed: () => context.push('/match'),
+              onPressed: () => context.push('/match/1'),
               backgroundColor: Theme.of(context).colorScheme.primary,
               shape: const CircleBorder(),
               child: const Icon(Icons.favorite_outline, color: Colors.white),
