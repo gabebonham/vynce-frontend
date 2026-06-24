@@ -119,18 +119,36 @@ class _MatchPageState extends State<MatchPage> {
                           final isTop = index == 0;
 
                           return Positioned.fill(
-                            child: Transform.scale(
-                              scale: isTop ? 1.0 : 1.0 - (index * 0.03),
-                              child: Transform.translate(
-                                offset: Offset(
-                                  0,
-                                  index * 8.0,
-                                ), // deslocamento vertical p/ efeito de pilha
-                                child: SwipeCard(
-                                  profile: profile,
-                                  onLike: isTop ? _onLike : () {},
-                                  onDislike: isTop ? _onDislike : () {},
-                                  event: _event!,
+                            child: IgnorePointer(
+                              ignoring: !isTop,
+                              child: ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: isTop
+                                      ? [
+                                          Colors.white,
+                                          Colors.white,
+                                        ] // sem efeito no card da frente
+                                      : [
+                                          Colors.transparent,
+                                          Colors.white.withOpacity(0.3),
+                                          Colors.white.withOpacity(0.3),
+                                          Colors.transparent,
+                                        ],
+                                  stops: isTop
+                                      ? [0.0, 1.0]
+                                      : [0.0, 0.25, 0.75, 1.0],
+                                ).createShader(bounds),
+                                blendMode: BlendMode.dstIn,
+                                child: Transform.scale(
+                                  scale: isTop ? 1.0 : 0.97,
+                                  child: SwipeCard(
+                                    profile: profile,
+                                    onLike: isTop ? _onLike : () {},
+                                    onDislike: isTop ? _onDislike : () {},
+                                    event: _event!,
+                                  ),
                                 ),
                               ),
                             ),
