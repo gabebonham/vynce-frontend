@@ -131,7 +131,6 @@ class _SwipeCardState extends State<SwipeCard>
             children: [
               // Imagem (UMA vez)
               ClipRRect(
-                borderRadius: BorderRadius.circular(16),
                 child: Image.network(
                   widget.profile.avatarUrl,
                   fit: BoxFit.cover,
