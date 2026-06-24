@@ -111,18 +111,77 @@ class _SwipeCardState extends State<SwipeCard>
   Widget _buildCard() {
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Image.network(
-            widget.profile.avatarUrl,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
+        // 1. ShaderMask envolve APENAS imagem + gradientes + conteúdo de texto
+        ShaderMask(
+          shaderCallback: (Rect bounds) {
+            return LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                Colors.white,
+                Colors.white,
+                Colors.transparent,
+              ],
+              stops: const [0.0, 0.12, 0.85, 1.0],
+            ).createShader(bounds);
+          },
+          blendMode: BlendMode.dstIn,
+          child: Stack(
+            children: [
+              // Imagem (UMA vez)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.network(
+                  widget.profile.avatarUrl,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ),
+              // Gradiente topo
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 120,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Theme.of(context).colorScheme.onPrimary,
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Gradiente bottom
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 300,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Conteúdo (nome, bio, chips) — DENTRO do ShaderMask
+            ],
           ),
         ),
-
-        Positioned(top: 16, right: 16, child: _MatchBadge(percent: 12)),
-
         Positioned(
           bottom: 0,
           left: 0,
@@ -132,11 +191,6 @@ class _SwipeCardState extends State<SwipeCard>
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(16),
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [Colors.black.withOpacity(0.85), Colors.transparent],
               ),
             ),
             child: Column(
@@ -183,7 +237,8 @@ class _SwipeCardState extends State<SwipeCard>
             ),
           ),
         ),
-
+        // 2. Badge e overlay FORA do ShaderMask — não somem
+        Positioned(top: 16, right: 16, child: _MatchBadge(percent: 12)),
         _SwipeOverlay(dragOffset: _dragOffset),
       ],
     );

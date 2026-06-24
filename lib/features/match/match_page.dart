@@ -54,86 +54,117 @@ class _MatchPageState extends State<MatchPage> {
       );
     }
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // header com nome do evento
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  const BackButton(),
-                  Expanded(
-                    child: Text(
-                      _event?.title ?? '',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).colorScheme.onPrimary, // meio
+              Theme.of(context).colorScheme.primary.withOpacity(0.4), // bottom
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // header com nome do evento
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(48),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.surface.withOpacity(0.1),
                       ),
-                      textAlign: TextAlign.center,
+                      child: BackButton(
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 40), // balancear o BackButton
-                ],
-              ),
-            ),
-
-            // deck de cards
-            Expanded(
-              child: Stack(
-                children: _profiles
-                    .asMap()
-                    .entries
-                    .map((entry) {
-                      final index = entry.key;
-                      final profile = entry.value;
-                      final isTop = index == 0;
-
-                      return Positioned.fill(
-                        child: Transform.scale(
-                          scale: isTop ? 1.0 : 1.0 - (index * 0.03),
-                          child: Transform.translate(
-                            offset: Offset(
-                              0,
-                              index * 8.0,
-                            ), // deslocamento vertical p/ efeito de pilha
-                            child: SwipeCard(
-                              profile: profile,
-                              onLike: isTop ? _onLike : () {},
-                              onDislike: isTop ? _onDislike : () {},
-                              event: _event!,
-                            ),
-                          ),
+                    Expanded(
+                      child: Text(
+                        _event?.title ?? '',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surface.withOpacity(0.5),
                         ),
-                      );
-                    })
-                    .toList()
-                    .reversed
-                    .toList(), // reversed p/ o index 0 ficar no topo do Stack
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(width: 40), // balancear o BackButton
+                  ],
+                ),
               ),
-            ),
 
-            // botões de ação
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _ActionButton(
-                    icon: Icons.close,
-                    color: Colors.red,
-                    onTap: _onDislike,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 12),
+                  child: Stack(
+                    children: _profiles
+                        .asMap()
+                        .entries
+                        .map((entry) {
+                          final index = entry.key;
+                          final profile = entry.value;
+                          final isTop = index == 0;
+
+                          return Positioned.fill(
+                            child: Transform.scale(
+                              scale: isTop ? 1.0 : 1.0 - (index * 0.03),
+                              child: Transform.translate(
+                                offset: Offset(
+                                  0,
+                                  index * 8.0,
+                                ), // deslocamento vertical p/ efeito de pilha
+                                child: SwipeCard(
+                                  profile: profile,
+                                  onLike: isTop ? _onLike : () {},
+                                  onDislike: isTop ? _onDislike : () {},
+                                  event: _event!,
+                                ),
+                              ),
+                            ),
+                          );
+                        })
+                        .toList()
+                        .reversed
+                        .toList(), // reversed p/ o index 0 ficar no topo do Stack
                   ),
-                  const SizedBox(width: 32),
-                  _ActionButton(
-                    icon: Icons.favorite,
-                    color: Colors.pink,
-                    onTap: _onLike,
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+
+              // botões de ação
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _ActionButton(
+                      icon: Icons.close,
+                      color: Colors.red,
+                      onTap: _onDislike,
+                    ),
+                    const SizedBox(width: 32),
+                    _ActionButton(
+                      icon: Icons.favorite,
+                      color: Colors.pink,
+                      onTap: _onLike,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
