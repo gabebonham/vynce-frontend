@@ -14,7 +14,9 @@ import 'package:vynce_frontend/features/map/widgets/map_event_card.dart';
 import 'package:vynce_frontend/features/map/widgets/map_screen.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({super.key, this.eventId});
+  final String? eventId;
+
   @override
   State<MapPage> createState() => _MapPageState();
 }
@@ -70,17 +72,53 @@ class _MapPageState extends State<MapPage> {
     _init();
   }
 
+  @override
+  void didUpdateWidget(MapPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.eventId != widget.eventId) {
+      _init();
+    }
+  }
+
   Future<void> _init() async {
     final position = await mapService.getCurrentLocation();
+
+    final filterSemId = _filter.copyWith(id: null);
     final results = await Future.wait([
-      eventsService.getNearbyEvents(position, filter: _filter),
+      eventsService.getNearbyEvents(position, filter: filterSemId),
+      profileService.getProfile('1'),
+      if (widget.eventId != null) eventsService.getEvent(widget.eventId!),
+    ]);
+
+    final nearbyEvents = results[0] as List<EventModel>;
+    final focusEvent = widget.eventId != null ? results[2] as EventModel : null;
+
+    final allEvents = [
+      if (focusEvent != null) focusEvent,
+      ...nearbyEvents.where((e) => e.id != focusEvent?.id),
+    ];
+
+    setState(() {
+      _currentPosition = position;
+      _events = allEvents;
+      _profile = results[1] as ProfileModel;
+      _filter = filterSemId;
+    });
+  }
+
+  Future<void> _initEventId() async {
+    final position = await mapService.getCurrentLocation();
+
+    final results = await Future.wait([
+      eventsService.getEvent(widget.eventId!),
       profileService.getProfile('1'),
     ]);
 
     setState(() {
       _currentPosition = position;
-      _events = results[0] as List<EventModel>;
+      _events = [results[0] as EventModel];
       _profile = results[1] as ProfileModel;
+      _filter = _filter.copyWith(id: widget.eventId);
     });
   }
 
@@ -121,6 +159,7 @@ class _MapPageState extends State<MapPage> {
                   filter: _filter,
                   currentPosition: _currentPosition!,
                   events: _events,
+                  focusEventId: widget.eventId,
                 ),
           _searchBar(),
           _eventsSheet(),

@@ -20,11 +20,15 @@ class _EventPageState extends State<EventPage> {
   EventModel? event;
   HostModel? profile;
   bool isFavorited = false;
+  bool _willGo = false;
+  bool _loadingWillGo = false;
   @override
   void initState() {
     super.initState();
     loadEvent();
+    loadProfile();
     isFavorited = isEventFavorited();
+    _checkWillGo();
   }
 
   @override
@@ -79,7 +83,7 @@ class _EventPageState extends State<EventPage> {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: 220,
+                      height: 320,
                       child: Image.network(
                         'https://picsum.photos/300',
                         fit: BoxFit.cover,
@@ -91,10 +95,7 @@ class _EventPageState extends State<EventPage> {
                       left: 0,
                       right: 0,
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
+                        padding: EdgeInsets.fromLTRB(12, 32, 12, 8),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
@@ -130,34 +131,9 @@ class _EventPageState extends State<EventPage> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
-                  child: TextButton.icon(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      alignment: Alignment.center,
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    label: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 4,
-                      children: [
-                        Text(
-                          'Garantir Vaga',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.surface,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_outlined,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.surface,
-                        ),
-                      ],
-                    ),
-                  ),
+                  child: _loadingWillGo
+                      ? Center(child: CircularProgressIndicator())
+                      : _goButton(),
                 ),
               ),
             ],
@@ -165,6 +141,95 @@ class _EventPageState extends State<EventPage> {
         ),
       ),
     );
+  }
+
+  void _checkWillGo() {
+    if (profile?.events == null || profile!.events.isEmpty) {
+      setState(() {
+        _willGo = false;
+      });
+      return;
+    }
+    setState(() {
+      _willGo = profile!.events.any((e) => e.id == event!.id);
+    });
+    return;
+  }
+
+  Future<void> _schedule() async {
+    setState(() => _loadingWillGo = true);
+    final success = await _eventsService.schedule(profile!.id);
+
+    setState(() {
+      _willGo = success;
+      _loadingWillGo = false;
+    });
+  }
+
+  Future<void> _unschedule() async {
+    setState(() => _loadingWillGo = true);
+    final success = await _eventsService.unschedule(profile!.id);
+
+    setState(() {
+      _willGo = success;
+      _loadingWillGo = false;
+    });
+  }
+
+  Widget _goButton() {
+    return _willGo
+        ? TextButton.icon(
+            onPressed: _unschedule,
+            style: TextButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              alignment: Alignment.center,
+              side: BorderSide(color: Theme.of(context).colorScheme.primary),
+            ),
+            label: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 4,
+              children: [
+                Text(
+                  'Desistir da vaga',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                Icon(
+                  Icons.close,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ],
+            ),
+          )
+        : TextButton.icon(
+            onPressed: _schedule,
+            style: TextButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              alignment: Alignment.center,
+              side: BorderSide(color: Theme.of(context).colorScheme.primary),
+            ),
+            label: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 4,
+              children: [
+                Text(
+                  'Garantir Vaga',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_outlined,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.surface,
+                ),
+              ],
+            ),
+          );
   }
 
   Widget _header(String formatted) {
@@ -186,11 +251,12 @@ class _EventPageState extends State<EventPage> {
         Padding(
           padding: EdgeInsets.all(8),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Column(
-                  spacing: 2,
+                  spacing: 6,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
@@ -244,7 +310,7 @@ class _EventPageState extends State<EventPage> {
                       event?.title ?? '',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 28,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -608,7 +674,9 @@ class _EventPageState extends State<EventPage> {
               height: 40,
               width: 240,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.go('/map', extra: event!.id);
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),

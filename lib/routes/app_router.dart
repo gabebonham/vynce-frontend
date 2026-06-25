@@ -84,7 +84,12 @@ final appRouter = GoRouter(
         // Branch 1: Mapa
         StatefulShellBranch(
           navigatorKey: _mapShellNavigatorKey,
-          routes: [GoRoute(path: '/map', builder: (_, state) => MapPage())],
+          routes: [
+            GoRoute(
+              path: '/map',
+              builder: (_, state) => MapPage(eventId: state.extra as String?),
+            ),
+          ],
         ),
 
         // Branch 2: Chats

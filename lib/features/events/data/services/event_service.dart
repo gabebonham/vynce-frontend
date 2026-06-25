@@ -28,6 +28,14 @@ class EventsService {
     return events;
   }
 
+  Future<bool> schedule(String id) async {
+    return await Future.delayed(const Duration(milliseconds: 300), () => true);
+  }
+
+  Future<bool> unschedule(String id) async {
+    return await Future.delayed(const Duration(milliseconds: 300), () => false);
+  }
+
   Future<EventModel> getEvent(String id) async {
     // final response = await dio.get('/events');
     final String response = await rootBundle.loadString(
@@ -130,7 +138,6 @@ class EventsService {
     double radiusKm = 1000,
     EventFilter? filter,
   }) async {
-    print('filter.title: ${filter?.title}');
     final String response = await rootBundle.loadString(
       'assets/mocks/events_mocks.json',
     );
@@ -148,6 +155,7 @@ class EventsService {
     }
 
     return events.where((event) {
+      // if (filter?.id != null) return event.id == filter!.id;
       final distance = calculateDistanceKm(
         origin.latitude,
         origin.longitude,

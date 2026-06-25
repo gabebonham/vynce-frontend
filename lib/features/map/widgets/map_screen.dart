@@ -9,12 +9,14 @@ class MapScreen extends StatefulWidget {
   final EventFilter filter;
   final List<EventModel> events;
   final LatLng currentPosition;
+  final String? focusEventId;
 
   const MapScreen({
     super.key,
     required this.filter,
     required this.events,
     required this.currentPosition,
+    this.focusEventId,
   });
 
   @override
@@ -28,15 +30,30 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    _initLocation();
+    _loadEventMarkers();
   }
 
   @override
   void didUpdateWidget(MapScreen oldWidget) {
+    print(widget.events.length);
     super.didUpdateWidget(oldWidget);
     if (oldWidget.events != widget.events) {
       _loadEventMarkers();
+      if (widget.focusEventId != null) _focusEvent();
     }
+  }
+
+  void _focusEvent() {
+    print('focusEventId: ${widget.focusEventId}');
+    print('event ids: ${widget.events.map((e) => e.id).toList()}');
+    final event = widget.events
+        .where((e) => e.id == widget.focusEventId)
+        .firstOrNull;
+    print('found: $event');
+    if (event == null) return;
+    _mapController?.animateCamera(
+      CameraUpdate.newLatLngZoom(LatLng(event.lat, event.lng), 16),
+    );
   }
 
   @override
@@ -46,9 +63,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _initLocation() async {
-    final latLng = widget.currentPosition;
-    await _loadEventMarkers();
-    _mapController?.animateCamera(CameraUpdate.newLatLngZoom(latLng, 13));
+    _mapController?.animateCamera(
+      CameraUpdate.newLatLngZoom(widget.currentPosition, 13),
+    );
   }
 
   Future<void> _loadEventMarkers() async {
@@ -92,9 +109,7 @@ class _MapScreenState extends State<MapScreen> {
       markers: _markers,
       onMapCreated: (controller) {
         _mapController = controller;
-        _mapController?.animateCamera(
-          CameraUpdate.newLatLngZoom(widget.currentPosition, 13),
-        );
+        _initLocation();
       },
     );
   }
