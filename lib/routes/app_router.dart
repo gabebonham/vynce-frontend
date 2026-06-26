@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vynce_frontend/core/notifiers/auth_notifier.dart';
+import 'package:vynce_frontend/features/auth/auth_page.dart';
 import 'package:vynce_frontend/features/chat/chat_page.dart';
 import 'package:vynce_frontend/features/chats/widgets/chats_page.dart';
 import 'package:vynce_frontend/features/events/presentation/pages/event_page.dart';
@@ -20,90 +23,117 @@ final _chatsShellNavigatorKey = GlobalKey<NavigatorState>();
 final _meShellNavigatorKey = GlobalKey<NavigatorState>();
 final _eventsFilterShellNavigatorKey = GlobalKey<NavigatorState>();
 
-final appRouter = GoRouter(
-  navigatorKey: _rootNavigatorKey,
-  initialLocation: '/events',
-  routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/events'),
+class _RouterNotifier extends ChangeNotifier {
+  final Ref _ref;
 
-    // Rotas fora das abas (full screen, sem bottom nav)
-    GoRoute(
-      path: '/chat/:id',
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (_, state) => ChatPage(id: state.pathParameters['id']!),
-    ),
-    GoRoute(
-      path: '/host-profile/:id',
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (_, state) => HostProfilePage(id: state.pathParameters['id']!),
-    ),
-    GoRoute(
-      path: '/profile/:id',
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (_, state) => ProfilePage(id: state.pathParameters['id']!),
-    ),
-    GoRoute(
-      path: '/match/:eventId',
-      builder: (context, state) =>
-          MatchPage(eventId: state.pathParameters['eventId']!),
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) =>
-          MainNavigationBar(navigationShell: navigationShell),
-      branches: [
-        // Branch 0: Eventos (com sub-shell de filtro)
-        StatefulShellBranch(
-          navigatorKey: _eventsShellNavigatorKey,
-          routes: [
-            ShellRoute(
-              navigatorKey: _eventsFilterShellNavigatorKey,
-              builder: (context, state, child) =>
-                  EventsNavigationShell(child: child),
-              routes: [
-                GoRoute(
-                  path: '/events',
-                  builder: (_, __) => const EventsPage(),
-                  routes: [
-                    GoRoute(
-                      path: ':id',
-                      parentNavigatorKey: _rootNavigatorKey,
-                      builder: (_, state) =>
-                          EventPage(id: state.pathParameters['id']!),
-                    ),
-                  ],
-                ),
-                GoRoute(
-                  path: '/events-filtered',
-                  builder: (_, __) => const FilteredEventsPage(),
-                ),
-              ],
-            ),
-          ],
-        ),
+  _RouterNotifier(this._ref) {
+    _ref.listen(authProvider, (_, __) => notifyListeners());
+  }
+}
 
-        // Branch 1: Mapa
-        StatefulShellBranch(
-          navigatorKey: _mapShellNavigatorKey,
-          routes: [
-            GoRoute(
-              path: '/map',
-              builder: (_, state) => MapPage(eventId: state.extra as String?),
-            ),
-          ],
-        ),
+final routerProvider = Provider((ref) {
+  final notifier = _RouterNotifier(ref);
+  final isAuthenticated = ref.watch(authProvider);
 
-        // Branch 2: Chats
-        StatefulShellBranch(
-          navigatorKey: _chatsShellNavigatorKey,
-          routes: [GoRoute(path: '/chats', builder: (_, state) => ChatsPage())],
-        ),
+  return GoRouter(
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: '/events',
+    refreshListenable: notifier,
+    redirect: (context, state) {
+      final isOnAuth = state.matchedLocation.startsWith('/auth');
 
-        // Branch 3: Me
-        StatefulShellBranch(
-          navigatorKey: _meShellNavigatorKey,
-          routes: [GoRoute(path: '/me', builder: (_, state) => MePage())],
-        ),
-      ],
-    ),
-  ],
-);
+      if (!isAuthenticated && !isOnAuth) return '/auth';
+      if (isAuthenticated && isOnAuth) return '/events';
+      return null;
+    },
+    routes: [
+      GoRoute(path: '/', redirect: (_, __) => '/events'),
+
+      // Auth
+      GoRoute(path: '/auth', builder: (_, __) => const AuthPage()),
+
+      // Rotas fora das abas (full screen, sem bottom nav)
+      GoRoute(
+        path: '/chat/:id',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (_, state) => ChatPage(id: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/host-profile/:id',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (_, state) => HostProfilePage(id: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/profile/:id',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (_, state) => ProfilePage(id: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/match/:eventId',
+        builder: (context, state) =>
+            MatchPage(eventId: state.pathParameters['eventId']!),
+      ),
+
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            MainNavigationBar(navigationShell: navigationShell),
+        branches: [
+          // Branch 0: Eventos (com sub-shell de filtro)
+          StatefulShellBranch(
+            navigatorKey: _eventsShellNavigatorKey,
+            routes: [
+              ShellRoute(
+                navigatorKey: _eventsFilterShellNavigatorKey,
+                builder: (context, state, child) =>
+                    EventsNavigationShell(child: child),
+                routes: [
+                  GoRoute(
+                    path: '/events',
+                    builder: (_, __) => const EventsPage(),
+                    routes: [
+                      GoRoute(
+                        path: ':id',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (_, state) =>
+                            EventPage(id: state.pathParameters['id']!),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: '/events-filtered',
+                    builder: (_, __) => const FilteredEventsPage(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // Branch 1: Mapa
+          StatefulShellBranch(
+            navigatorKey: _mapShellNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/map',
+                builder: (_, state) => MapPage(eventId: state.extra as String?),
+              ),
+            ],
+          ),
+
+          // Branch 2: Chats
+          StatefulShellBranch(
+            navigatorKey: _chatsShellNavigatorKey,
+            routes: [
+              GoRoute(path: '/chats', builder: (_, state) => ChatsPage()),
+            ],
+          ),
+
+          // Branch 3: Me
+          StatefulShellBranch(
+            navigatorKey: _meShellNavigatorKey,
+            routes: [GoRoute(path: '/me', builder: (_, state) => MePage())],
+          ),
+        ],
+      ),
+    ],
+  );
+});
