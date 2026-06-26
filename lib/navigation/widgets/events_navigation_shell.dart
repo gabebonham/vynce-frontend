@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
-import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
+import 'package:vynce_frontend/core/services/profile_service.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/category_badges.dart';
 import 'package:vynce_frontend/features/events/presentation/widgets/search_event.dart';
 

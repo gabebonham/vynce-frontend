@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:vynce_frontend/features/events/data/models/host_model.dart';
+import 'package:vynce_frontend/core/models/host_model.dart';
 
 class HostService {
   final Dio dio;

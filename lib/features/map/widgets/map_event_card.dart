@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
 
 class MapEventCard extends StatefulWidget {
   const MapEventCard({

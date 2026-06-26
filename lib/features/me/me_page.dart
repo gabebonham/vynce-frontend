@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
-import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
+import 'package:vynce_frontend/core/services/profile_service.dart';
 import 'package:vynce_frontend/features/map/services/map_service.dart';
 
 class MePage extends StatefulWidget {

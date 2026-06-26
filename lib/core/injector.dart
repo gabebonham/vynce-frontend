@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:vynce_frontend/features/events/data/services/chats_service.dart';
-import 'package:vynce_frontend/features/events/data/services/host_service.dart';
-import 'package:vynce_frontend/features/events/data/services/profile_service.dart';
+import 'package:vynce_frontend/core/services/chats_service.dart';
+import 'package:vynce_frontend/core/services/host_service.dart';
+import 'package:vynce_frontend/core/services/profile_service.dart';
 import 'package:vynce_frontend/features/map/services/map_service.dart';
 
-import '../features/events/data/services/event_service.dart';
-import '../features/events/data/services/categories_service.dart';
+import 'services/event_service.dart';
+import 'services/categories_service.dart';
 
 final getIt = GetIt.instance;
 

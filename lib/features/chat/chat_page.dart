@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/models/chat_model.dart';
-import 'package:vynce_frontend/features/events/data/models/message_model.dart';
-import 'package:vynce_frontend/features/events/data/services/chats_service.dart';
+import 'package:vynce_frontend/core/models/chat_model.dart';
+import 'package:vynce_frontend/core/models/message_model.dart';
+import 'package:vynce_frontend/core/services/chats_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vynce_frontend/navigation/extensions/safe_navigation.dart';
 

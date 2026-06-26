@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:vynce_frontend/features/events/data/dtos/api_response.dart';
-import 'package:vynce_frontend/features/events/data/models/chat_model.dart';
-import 'package:vynce_frontend/features/events/data/models/chat_preview_model.dart';
+import 'package:vynce_frontend/core/dtos/api_response.dart';
+import 'package:vynce_frontend/core/models/chat_model.dart';
+import 'package:vynce_frontend/core/models/chat_preview_model.dart';
 
 class ChatsService {
   final Dio dio;

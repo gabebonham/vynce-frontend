@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vynce_frontend/core/utils/distance_utils.dart';
-import 'package:vynce_frontend/features/events/data/models/event_filter.dart';
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/ongoing_event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/core/models/event_filter.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
+import 'package:vynce_frontend/core/models/ongoing_event_model.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
 
 class EventsService {
   final Dio dio;

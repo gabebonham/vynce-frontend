@@ -1,4 +1,4 @@
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
 
 class HostModel {
   final String id;

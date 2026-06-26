@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/host_model.dart';
-import 'package:vynce_frontend/features/events/data/services/event_service.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
+import 'package:vynce_frontend/core/models/host_model.dart';
+import 'package:vynce_frontend/core/services/event_service.dart';
 import 'package:intl/intl.dart';
-import 'package:vynce_frontend/features/events/data/services/host_service.dart';
+import 'package:vynce_frontend/core/services/host_service.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({super.key, required this.id});

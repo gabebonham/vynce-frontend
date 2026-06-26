@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/services/categories_service.dart';
+import 'package:vynce_frontend/core/services/categories_service.dart';
 
 class CategoryBadges extends StatefulWidget {
   const CategoryBadges({super.key, required});

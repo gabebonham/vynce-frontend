@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
-import 'package:vynce_frontend/features/events/data/models/host_model.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/core/models/host_model.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
 
 class OngoingEventModel {
   final String id;

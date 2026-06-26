@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/ongoing_event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
+import 'package:vynce_frontend/core/models/ongoing_event_model.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
 import 'package:flutter/material.dart';
 
 class SwipeCard extends StatefulWidget {

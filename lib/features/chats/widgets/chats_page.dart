@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/features/events/data/models/chat_preview_model.dart';
-import 'package:vynce_frontend/features/events/data/services/chats_service.dart';
+import 'package:vynce_frontend/core/models/chat_preview_model.dart';
+import 'package:vynce_frontend/core/services/chats_service.dart';
 
 class ChatsPage extends StatefulWidget {
   const ChatsPage({super.key});

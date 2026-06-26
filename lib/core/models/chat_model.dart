@@ -1,6 +1,6 @@
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
-import 'package:vynce_frontend/features/events/data/models/message_model.dart';
-import 'package:vynce_frontend/features/events/data/models/profile_model.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
+import 'package:vynce_frontend/core/models/message_model.dart';
+import 'package:vynce_frontend/core/models/profile_model.dart';
 
 class ChatModel {
   final String id;

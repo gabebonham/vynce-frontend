@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:vynce_frontend/features/events/data/models/event_filter.dart';
-import 'package:vynce_frontend/features/events/data/models/event_model.dart';
+import 'package:vynce_frontend/core/models/event_filter.dart';
+import 'package:vynce_frontend/core/models/event_model.dart';
 
 class MapScreen extends StatefulWidget {
   final EventFilter filter;
