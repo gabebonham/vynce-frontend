@@ -39,4 +39,21 @@ class ChatsService {
       message: '',
     );
   }
+
+  // Stream<bool> watchUnreadMessages() async* {
+  //   final client = http.Client();
+  //   final request = http.Request(
+  //     'GET',
+  //     Uri.parse('$baseUrl/chats/unread-stream'),
+  //   );
+  //   final response = await client.send(request);
+
+  //   await for (final chunk in response.stream.transform(utf8.decoder)) {
+  //     // backend manda: "data: true\n\n" ou "data: false\n\n"
+  //     if (chunk.contains('data:')) {
+  //       final value = chunk.split('data:').last.trim();
+  //       yield value == 'true';
+  //     }
+  //   }
+  // }
 }

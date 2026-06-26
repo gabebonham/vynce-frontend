@@ -49,7 +49,7 @@ final appRouter = GoRouter(
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
-          MainNavingationBar(navigationShell: navigationShell),
+          MainNavigationBar(navigationShell: navigationShell),
       branches: [
         // Branch 0: Eventos (com sub-shell de filtro)
         StatefulShellBranch(
