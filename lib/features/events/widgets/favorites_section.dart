@@ -4,8 +4,8 @@ import 'package:vynce_frontend/core/models/event_model.dart';
 import 'package:vynce_frontend/core/models/profile_model.dart';
 import 'package:vynce_frontend/core/services/event_service.dart';
 import 'package:vynce_frontend/core/services/profile_service.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/event_card.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/favorite_event_card.dart';
+import 'package:vynce_frontend/features/events/widgets/event_card.dart';
+import 'package:vynce_frontend/features/events/widgets/favorite_event_card.dart';
 
 class FavoritesSection extends StatefulWidget {
   const FavoritesSection({

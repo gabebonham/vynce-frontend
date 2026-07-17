@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/events_area.dart';
+import 'package:vynce_frontend/features/events/widgets/events_area.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});

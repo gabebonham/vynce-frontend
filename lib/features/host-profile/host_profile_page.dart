@@ -5,7 +5,7 @@ import 'package:vynce_frontend/core/models/host_model.dart';
 import 'package:vynce_frontend/core/models/profile_model.dart';
 import 'package:vynce_frontend/core/services/host_service.dart';
 import 'package:vynce_frontend/core/services/profile_service.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/event_card.dart';
+import 'package:vynce_frontend/features/events/widgets/event_card.dart';
 
 class HostProfilePage extends StatefulWidget {
   const HostProfilePage({super.key, required this.id});

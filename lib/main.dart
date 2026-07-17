@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vynce_frontend/core/config/env.dart';
 import 'package:vynce_frontend/core/injector.dart';
-import 'package:vynce_frontend/core/notifiers/auth_notifier.dart';
 import 'package:vynce_frontend/core/theme/app_theme.dart';
-import 'package:vynce_frontend/routes/app_router.dart'; // <-- adiciona
+import 'package:vynce_frontend/routes/app_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,8 +10,9 @@ final RouteObserver<ModalRoute<void>> routeObserver =
     RouteObserver<ModalRoute<void>>();
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // sempre primeira linha
   setupInjector();
-  WidgetsFlutterBinding.ensureInitialized();
+  await Env.load();
   await initializeDateFormatting('pt_BR');
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -23,7 +24,6 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
 
-    ref.read(authProvider.notifier).init();
     return MaterialApp.router(
       title: 'Vynce',
       theme: AppTheme.lightTheme,

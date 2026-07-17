@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vynce_frontend/core/models/event_model.dart';
 import 'package:vynce_frontend/core/models/profile_model.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/avatar_stack.dart';
+import 'package:vynce_frontend/features/events/widgets/avatar_stack.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
 

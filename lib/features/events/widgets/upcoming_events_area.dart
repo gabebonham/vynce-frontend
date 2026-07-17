@@ -4,10 +4,10 @@ import 'package:vynce_frontend/core/models/event_model.dart';
 import 'package:vynce_frontend/core/models/profile_model.dart';
 import 'package:vynce_frontend/core/services/event_service.dart';
 import 'package:vynce_frontend/core/services/profile_service.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/minimal_event_card.dart';
+import 'package:vynce_frontend/features/events/widgets/upcoming_event_card.dart';
 
-class NextToYouArea extends StatefulWidget {
-  const NextToYouArea({
+class UpcomingEventsArea extends StatefulWidget {
+  const UpcomingEventsArea({
     super.key,
     required this.profile,
     required this.events,
@@ -17,10 +17,10 @@ class NextToYouArea extends StatefulWidget {
   final List<EventModel> events;
   final Function(String) onFavTap;
   @override
-  State<NextToYouArea> createState() => _NextToYouAreaState();
+  State<UpcomingEventsArea> createState() => _UpcomingEventsAreaState();
 }
 
-class _NextToYouAreaState extends State<NextToYouArea> {
+class _UpcomingEventsAreaState extends State<UpcomingEventsArea> {
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,7 @@ class _NextToYouAreaState extends State<NextToYouArea> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'EVENTOS PERTOS DE VOCÊ',
+          'EVENTOS CHEGANDO',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight(600),
@@ -49,7 +49,7 @@ class _NextToYouAreaState extends State<NextToYouArea> {
           spacing: 14,
           children: widget.events
               .map(
-                (e) => MinimalEventCard(
+                (e) => UpcomingEventCard(
                   event: e,
                   profile: widget.profile,
                   onFavTap: widget.onFavTap,

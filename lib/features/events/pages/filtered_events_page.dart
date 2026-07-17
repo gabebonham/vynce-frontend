@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/filtered_section.dart';
+import 'package:vynce_frontend/features/events/widgets/filtered_section.dart';
 
 class FilteredEventsPage extends StatefulWidget {
   const FilteredEventsPage({super.key});

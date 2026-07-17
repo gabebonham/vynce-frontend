@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vynce_frontend/core/models/event_model.dart';
 import 'package:vynce_frontend/core/models/profile_model.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/event_card.dart';
+import 'package:vynce_frontend/features/events/widgets/event_card.dart';
 
 class FeaturedSection extends StatelessWidget {
   const FeaturedSection({

@@ -12,7 +12,7 @@ final getIt = GetIt.instance;
 
 void setupInjector() {
   getIt.registerLazySingleton<Dio>(
-    () => Dio(BaseOptions(baseUrl: 'https://api.seusite.com')),
+    () => Dio(BaseOptions(baseUrl: 'http://localhost:3000')),
   );
 
   getIt.registerLazySingleton<EventsService>(() => EventsService(getIt<Dio>()));

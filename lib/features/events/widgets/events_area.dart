@@ -4,10 +4,10 @@ import 'package:vynce_frontend/core/models/event_model.dart';
 import 'package:vynce_frontend/core/models/profile_model.dart';
 import 'package:vynce_frontend/core/services/event_service.dart';
 import 'package:vynce_frontend/core/services/profile_service.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/favorites_section.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/featured_section.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/next_to_you_area.dart';
-import 'package:vynce_frontend/features/events/presentation/widgets/upcoming_events_area.dart';
+import 'package:vynce_frontend/features/events/widgets/favorites_section.dart';
+import 'package:vynce_frontend/features/events/widgets/featured_section.dart';
+import 'package:vynce_frontend/features/events/widgets/next_to_you_area.dart';
+import 'package:vynce_frontend/features/events/widgets/upcoming_events_area.dart';
 
 class EventsArea extends StatefulWidget {
   const EventsArea({super.key});

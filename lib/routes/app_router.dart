@@ -5,9 +5,9 @@ import 'package:vynce_frontend/core/notifiers/auth_notifier.dart';
 import 'package:vynce_frontend/features/auth/auth_page.dart';
 import 'package:vynce_frontend/features/chat/chat_page.dart';
 import 'package:vynce_frontend/features/chats/widgets/chats_page.dart';
-import 'package:vynce_frontend/features/events/presentation/pages/event_page.dart';
-import 'package:vynce_frontend/features/events/presentation/pages/events_page.dart';
-import 'package:vynce_frontend/features/events/presentation/pages/filtered_events_page.dart';
+import 'package:vynce_frontend/features/events/pages/event_page.dart';
+import 'package:vynce_frontend/features/events/pages/events_page.dart';
+import 'package:vynce_frontend/features/events/pages/filtered_events_page.dart';
 import 'package:vynce_frontend/features/host-profile/host_profile_page.dart';
 import 'package:vynce_frontend/features/map/map_page.dart';
 import 'package:vynce_frontend/features/match/match_page.dart';
@@ -40,17 +40,21 @@ final routerProvider = Provider((ref) {
     initialLocation: '/events',
     refreshListenable: notifier,
     redirect: (context, state) {
+      final authStatus = ref.read(
+        authProvider,
+      ); // usa o `ref` do Provider, não `_ref` do notifier
       final isOnAuth = state.matchedLocation.startsWith('/auth');
 
-      if (!isAuthenticated && !isOnAuth) return '/auth';
-      if (isAuthenticated && isOnAuth) return '/events';
+      if (authStatus == AuthStatus.unknown) return null;
+      if (authStatus == AuthStatus.unauthenticated && !isOnAuth) return '/auth';
+      if (authStatus == AuthStatus.authenticated && isOnAuth) return '/events';
       return null;
     },
     routes: [
       GoRoute(path: '/', redirect: (_, __) => '/events'),
 
       // Auth
-      GoRoute(path: '/auth', builder: (_, __) => const AuthPage()),
+      GoRoute(path: '/auth', builder: (_, __) => AuthPage()),
 
       // Rotas fora das abas (full screen, sem bottom nav)
       GoRoute(
